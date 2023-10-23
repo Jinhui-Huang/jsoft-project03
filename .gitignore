@@ -33,5 +33,4 @@ build/
 ### VS Code ###
 .vscode/
 /logs/
-
-/src/test/java/com/myhd/*
+/src/test/java/

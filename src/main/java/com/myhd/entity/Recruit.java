@@ -1,0 +1,106 @@
+package com.myhd.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+/**
+ * <p>
+ * 招聘职位表
+ * </p>
+ *
+ * @author Jinhui-Huang
+ * @since 2023-10-23
+ */
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+public class Recruit implements Serializable {
+
+    private static final long serialVersionUID = 24332134093119558L;
+
+    /**
+     * 企业编号
+     */
+    private Integer companyId;
+
+    /**
+     * 招聘编号
+     */
+    private Integer recruitId;
+
+    /**
+     * 招聘的职位名称
+     */
+    private String recruitName;
+
+    /**
+     * 招聘的职位标签  多个标签用#分割
+     */
+    private String recruitTag;
+
+    /**
+     * 职位地址
+     */
+    private String recruitAddress;
+
+    /**
+     * 最高薪
+     */
+    private Double recruitSalaryMax;
+
+    /**
+     * 最低薪
+     */
+    private Double recruitSalaryMin;
+
+    /**
+     * 招聘人数
+     */
+    private Integer recruitNumber;
+
+    /**
+     * 招聘学历
+     */
+    private Integer recruitDegree;
+
+    /**
+     * 招聘年龄
+     */
+    private String recruitAge;
+
+    /**
+     * 招聘的要求工作经验
+     */
+    private String recruitExp;
+
+    /**
+     * 招聘方式
+     */
+    private String recruitType;
+
+    /**
+     * 招聘发布/更新时间
+     */
+    private Date recruitTime;
+
+    /**
+     * 岗位职责
+     */
+    private String recruitTextDuty;
+
+    /**
+     * 岗位要求
+     */
+    private String recruitTextNeed;
+
+    /**
+     * 职位领域
+     */
+    private Integer jobField;
+
+
+}
