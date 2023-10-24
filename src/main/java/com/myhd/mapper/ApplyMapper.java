@@ -37,5 +37,5 @@ public interface ApplyMapper {
      * @param userId 当前用户编号
      * @return
      */
-    List<Recruit> getAllUserApply(Integer userId);
+    List<Recruit> getAllUserApply(Integer userId,String like);
 }
