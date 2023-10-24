@@ -36,5 +36,4 @@ public interface ApplyMapper {
      * @return
      */
     List<Recruit> getAllUserApply(Integer userId);
-
 }
