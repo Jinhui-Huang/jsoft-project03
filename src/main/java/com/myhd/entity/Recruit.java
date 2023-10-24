@@ -33,6 +33,11 @@ public class Recruit implements Serializable {
     private Integer recruitId;
 
     /**
+     公司名称
+    * */
+    private String companyName;
+
+    /**
      * 招聘的职位名称
      */
     private String recruitName;
@@ -102,5 +107,10 @@ public class Recruit implements Serializable {
      */
     private Integer jobField;
 
+    /**
+     * compnay字段
+     * 用于在首页高薪职位列表中显示公司logo
+     */
+    private Company company;
 
 }
