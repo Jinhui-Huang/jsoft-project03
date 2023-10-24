@@ -32,7 +32,7 @@ public interface ApplyMapper {
          * where user_id = #{userId}
      * @author JoneElmo && CYQH
      * @date 2023-10-24 11:05
-     * @param userId 用户百衲和哦
+     * @param userId 用户编号
      * @return
      */
     List<Recruit> getAllUserApply(Integer userId);
