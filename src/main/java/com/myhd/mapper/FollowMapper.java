@@ -36,9 +36,9 @@ public interface FollowMapper {
      * 用户点击关注企业后，会将信息插入关注表中
      * @author JoneElmo && CYQH
      * @date 2023-10-24 09:28
-     * @param status 关注状态 1已关注 0未关注
+     * @param follow
      * @return int 1成功 0失败
      */
-    Integer setFollowStatus(int status);
+    Integer setFollowStatus(Follow follow);
 
 }
