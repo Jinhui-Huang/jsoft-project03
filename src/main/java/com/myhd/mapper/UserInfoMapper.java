@@ -1,6 +1,7 @@
 package com.myhd.mapper;
 
 import com.myhd.entity.UserInfo;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -10,6 +11,7 @@ import com.myhd.entity.UserInfo;
  * @author Jinhui-Huang
  * @since 2023-10-23
  */
+@Mapper
 public interface UserInfoMapper {
     /**
      * @description 插入个人信息

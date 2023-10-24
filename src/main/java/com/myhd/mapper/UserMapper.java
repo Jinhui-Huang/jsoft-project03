@@ -2,6 +2,7 @@ package com.myhd.mapper;
 
 import com.myhd.dto.LoginFormDTO;
 import com.myhd.entity.User;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.myhd.entity.User;
  * @author Jinhui-Huang
  * @since 2023-10-23
  */
+@Mapper
 public interface UserMapper {
     /**
      * @description 用户注册接口

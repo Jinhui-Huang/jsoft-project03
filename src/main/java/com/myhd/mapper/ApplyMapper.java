@@ -2,6 +2,7 @@ package com.myhd.mapper;
 
 import com.myhd.entity.Apply;
 import com.myhd.entity.Recruit;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @author Jinhui-Huang
  * @since 2023-10-23
  */
+@Mapper
 public interface ApplyMapper {
 
     /**
@@ -32,7 +34,7 @@ public interface ApplyMapper {
          * where user_id = #{userId}
      * @author JoneElmo && CYQH
      * @date 2023-10-24 11:05
-     * @param userId 用户百衲和哦
+     * @param userId 当前用户编号
      * @return
      */
     List<Recruit> getAllUserApply(Integer userId);

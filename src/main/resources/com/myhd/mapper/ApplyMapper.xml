@@ -2,4 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myhd.mapper.ApplyMapper">
 
+    <insert id="insertApplyInfo">
+        insert into tb_apply(user_id, recruit_id, company_id, company_name, recruit_address, update_time, salary) values (#{userId}, #{recruitId}, #{companyId}, #{companyName}, #{recruitAddress}, #{updateTime}, #{salary})
+    </insert>
+
+
+    <select id="getAllUserApply" resultType="com.myhd.entity.Recruit">
+        select r.* from tb_apply a join tb_recruit r on a.company_id = r.company_id and a.recruit_id = r.recruit_id where user_id = #{userId}
+    </select>
+
 </mapper>

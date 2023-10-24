@@ -3,6 +3,7 @@ package com.myhd.mapper;
 import com.alibaba.druid.sql.dialect.blink.parser.BlinkStatementParser;
 import com.myhd.entity.Apply;
 import com.myhd.entity.Recruit;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * @author Jinhui-Huang
  * @since 2023-10-23
  */
+@Mapper
 public interface RecruitMapper {
 
     /**
