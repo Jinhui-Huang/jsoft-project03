@@ -112,4 +112,12 @@ public class Recruit implements Serializable {
      * 用于在首页高薪职位列表中显示公司logo
      */
     private Company company;
+
+    /**
+     * 用于判断记录是否被申请
+     * 通过外连接查询出来的结果
+     * 如果包含userid字段，说明被申请
+     * 如果userid字段为null,说明未被申请
+     */
+    private Integer userId;
 }
