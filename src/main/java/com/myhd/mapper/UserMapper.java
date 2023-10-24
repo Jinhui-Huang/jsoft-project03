@@ -2,6 +2,7 @@ package com.myhd.mapper;
 
 import com.myhd.dto.LoginFormDTO;
 import com.myhd.entity.User;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,7 +12,8 @@ import com.myhd.entity.User;
  * @author Jinhui-Huang
  * @since 2023-10-23
  */
-public interface UserMapper {
+@Mapper
+public interface  UserMapper {
     /**
      * @description 用户注册接口
      * 用于插入用户信息
@@ -27,10 +29,10 @@ public interface UserMapper {
      * 动态sql通过手机号或者邮箱来查询
      * @author JoneElmo && CYQH
      * @date 2023-10-24 08:56
-     * @param args 可变参数 该参数可以是邮箱也可以是手机号或用户名
+     * @param loginFormDTO
      * @return int 1 用户存在 0 用户不存在
      */
-    Integer isUserExist(String args);
+    Integer isUserExist(LoginFormDTO loginFormDTO);
 
     /**
      * @description 根据输入的参数查找用户信息
