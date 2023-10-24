@@ -112,5 +112,4 @@ public class Recruit implements Serializable {
      * 用于在首页高薪职位列表中显示公司logo
      */
     private Company company;
-
 }
