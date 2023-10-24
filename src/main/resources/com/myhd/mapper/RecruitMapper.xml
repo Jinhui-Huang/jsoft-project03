@@ -28,7 +28,7 @@
         where r.company_id = #{companyId} and r.recruit_id = #{recruitId}
     </select>
 
-    <select id="getLikeInfo" resultType="com.myhd.entity.Recruit" parameterType="String">
+    <select id="getLikeInfo" resultType="com.myhd.entity.Recruit" parameterType="java.lang.String">
         <!-- 使用 CONCAT 函数和 '%' 进行模糊查询 -->
         select r.company_id, r.recruit_id, r.company_name, recruit_name, recruit_tag,
         r.recruit_address, recruit_salary_max, recruit_salary_min, recruit_number,
@@ -37,7 +37,11 @@
         from tb_recruit r
         left join tb_apply a
         using(recruit_id)
-        where r.recruit_name like CONCAT('%', #{like}, '%')
+        <where>
+            <if test="like != null">
+                r.recruit_name like CONCAT('%', #{like}, '%')
+            </if>
+        </where>
     </select>
 
     <select id="getHighSalary" resultMap="highSalaryResultMap">
