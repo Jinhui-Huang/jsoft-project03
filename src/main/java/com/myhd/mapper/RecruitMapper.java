@@ -3,6 +3,7 @@ package com.myhd.mapper;
 import com.alibaba.druid.sql.dialect.blink.parser.BlinkStatementParser;
 import com.myhd.entity.Apply;
 import com.myhd.entity.Recruit;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * @author Jinhui-Huang
  * @since 2023-10-23
  */
+@Mapper
 public interface RecruitMapper {
 
     /**
@@ -50,7 +52,7 @@ public interface RecruitMapper {
      * 和申请表外连接 判断是否被申请
      * @author JoneElmo && CYQH
      * @date 2023-10-24 10:39
-     * @param like 模糊查询的参数
+     * @param like 模糊查询的参数  招聘的职位关键字(recruit_name)
      * @return
      */
     List<Recruit> getLikeInfo(String like);
@@ -64,6 +66,6 @@ public interface RecruitMapper {
      * @date 2023-10-24 10:53
      * @return Recruit
      */
-    Recruit getHighSalary();
+    List<Recruit> getHighSalary();
 
 }
