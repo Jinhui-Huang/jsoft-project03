@@ -11,5 +11,22 @@ import com.myhd.entity.UserInfo;
  * @since 2023-10-23
  */
 public interface UserInfoMapper {
+    /**
+     * @description 插入个人信息
+     * @author JoneElmo && CYQH
+     * @date 2023-10-24 09:36
+     * @param userInfo 个人信息
+     * @return int 1成功 0失败
+     */
+    Integer saveUserInfo(UserInfo userInfo);
 
+    /**
+     * @description 根据用户编号查询信息
+     * 用于数据回显
+     * @author JoneElmo && CYQH
+     * @date 2023-10-24 09:59
+     * @param userId 用户编号
+     * @return UserInfo 用户详细信息
+     */
+    UserInfo  getUserInfoById(Integer userId);
 }
