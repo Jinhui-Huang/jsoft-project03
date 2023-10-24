@@ -22,4 +22,5 @@ public class LoginFormDTO{
     private String userEmail;
     private String userName;
     private String password;
+
 }
