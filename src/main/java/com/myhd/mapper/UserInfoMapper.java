@@ -29,5 +29,4 @@ public interface UserInfoMapper {
      * @return UserInfo 用户详细信息
      */
     UserInfo  getUserInfoById(Integer userId);
-
 }

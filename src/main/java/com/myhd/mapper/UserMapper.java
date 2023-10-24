@@ -50,4 +50,5 @@ public interface UserMapper {
      * @return int 1表示成功  0表示失败
      */
     Integer updateUserPassword(User user);
+
 }

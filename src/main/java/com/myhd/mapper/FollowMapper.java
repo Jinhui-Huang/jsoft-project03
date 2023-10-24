@@ -40,4 +40,5 @@ public interface FollowMapper {
      * @return int 1成功 0失败
      */
     Integer setFollowStatus(int status);
+
 }

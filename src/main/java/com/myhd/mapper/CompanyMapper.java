@@ -23,5 +23,4 @@ public interface CompanyMapper {
      * @return Company 企业信息
      */
     Company findById(Integer id);
-
 }

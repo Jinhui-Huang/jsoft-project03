@@ -30,4 +30,5 @@ public interface ResumeMapper {
      * @return Resume简历信息
      */
     Resume getResumeByUserId(Integer userId);
+
 }

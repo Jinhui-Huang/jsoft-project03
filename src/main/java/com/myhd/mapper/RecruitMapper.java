@@ -66,5 +66,4 @@ public interface RecruitMapper {
      */
     Recruit getHighSalary();
 
-
 }
