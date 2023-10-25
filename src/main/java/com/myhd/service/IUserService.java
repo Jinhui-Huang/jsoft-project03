@@ -10,4 +10,6 @@ package com.myhd.service;
  */
 public interface IUserService {
 
+
+
 }

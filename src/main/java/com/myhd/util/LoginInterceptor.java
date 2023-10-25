@@ -1,6 +1,6 @@
 package com.myhd.util;
 
-import com.myhd.dto.LoginFormDTO;
+import com.myhd.dto.FormDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -30,7 +30,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         /*1. 判断是否需要去拦截(ThreadLocal中是否有用户)*/
-        if (UserHolder.getUser(LoginFormDTO.class) == null) {
+        if (UserHolder.getUser(FormDTO.class) == null) {
             /*没有, 需要拦截, 设置状态码*/
             response.setStatus(401);
             /*拦截返回false*/

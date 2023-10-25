@@ -1,6 +1,6 @@
 package com.myhd.mapper;
 
-import com.myhd.dto.LoginFormDTO;
+import com.myhd.dto.FormDTO;
 import com.myhd.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -32,7 +32,7 @@ public interface UserMapper {
      * @param loginFormDTO
      * @return int 1 用户存在 0 用户不存在
      */
-    Integer isUserExist(LoginFormDTO loginFormDTO);
+    Integer isUserExist(FormDTO formDTO);
 
     /**
      * @description 根据输入的参数查找用户信息
@@ -42,7 +42,7 @@ public interface UserMapper {
      * @param loginFormDTO 登陆的表单数据传输对象
      * @return User 结果用于对比
      */
-    User findByArgs(LoginFormDTO loginFormDTO);
+    User findByArgs(FormDTO formDTO);
 
     /**
      * @description 用于实现找回密码功能
