@@ -19,7 +19,6 @@ import org.springframework.stereotype.Component;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@Component
 public class Recruit implements Serializable {
 
     private static final long serialVersionUID = 24332134093119558L;

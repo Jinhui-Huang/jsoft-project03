@@ -1,6 +1,7 @@
 package com.myhd.mapper;
 
 import com.myhd.entity.Follow;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>

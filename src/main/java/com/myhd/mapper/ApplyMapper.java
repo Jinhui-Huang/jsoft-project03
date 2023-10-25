@@ -2,6 +2,7 @@ package com.myhd.mapper;
 
 import com.myhd.entity.Apply;
 import com.myhd.entity.Recruit;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 

@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@Component
 public class Resume implements Serializable {
 
     private static final long serialVersionUID = 49416326599804497L;

@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@Component
 public class Company implements Serializable {
 
     private static final long serialVersionUID = -626166199017249786L;
