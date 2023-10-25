@@ -10,6 +10,7 @@ import com.myhd.entity.Follow;
  * @author Jinhui-Huang
  * @since 2023-10-23
  */
+@Mapper
 public interface FollowMapper {
     /**
      * @description 数据库插入操作
@@ -36,7 +37,7 @@ public interface FollowMapper {
      * 用户点击关注企业后，会将信息插入关注表中
      * @author JoneElmo && CYQH
      * @date 2023-10-24 09:28
-     * @param follow
+     * @param follow 关注信息对象
      * @return int 1成功 0失败
      */
     Integer setFollowStatus(Follow follow);

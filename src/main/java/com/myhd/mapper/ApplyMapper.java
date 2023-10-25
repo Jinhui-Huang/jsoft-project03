@@ -13,6 +13,7 @@ import java.util.List;
  * @author Jinhui-Huang
  * @since 2023-10-23
  */
+@Mapper
 public interface ApplyMapper {
 
     /**
@@ -32,8 +33,8 @@ public interface ApplyMapper {
          * where user_id = #{userId}
      * @author JoneElmo && CYQH
      * @date 2023-10-24 11:05
-     * @param userId 用户编号
+     * @param userId 当前用户编号
      * @return
      */
-    List<Recruit> getAllUserApply(Integer userId);
+    List<Recruit> getAllUserApply(Integer userId,String like);
 }

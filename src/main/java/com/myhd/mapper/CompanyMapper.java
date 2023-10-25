@@ -1,6 +1,7 @@
 package com.myhd.mapper;
 
 import com.myhd.entity.Company;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * @author Jinhui-Huang
  * @since 2023-10-23
  */
+@Mapper
 public interface CompanyMapper {
 
     /**

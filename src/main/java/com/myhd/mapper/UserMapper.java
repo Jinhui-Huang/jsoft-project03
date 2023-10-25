@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2023-10-23
  */
 @Mapper
-public interface  UserMapper {
+public interface UserMapper {
     /**
      * @description 用户注册接口
      * 用于插入用户信息

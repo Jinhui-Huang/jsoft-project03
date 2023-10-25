@@ -1,9 +1,12 @@
 package com.myhd.entity;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>
@@ -16,6 +19,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
+@Component
 public class Apply implements Serializable {
 
     private static final long serialVersionUID = -4189479609085601919L;
@@ -48,7 +52,7 @@ public class Apply implements Serializable {
     /**
      * 刷新时间
      */
-    private String updateTime;
+    private Date updateTime;
 
     /**
      * 薪水
