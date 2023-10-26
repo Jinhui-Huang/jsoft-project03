@@ -49,17 +49,17 @@ public class ApplyServiceImpl implements IApplyService {
         PageHelper.startPage(pageNum,1);
         String key = userId+":"+like+":"+pageNum;
         List<Recruit> allUserApply;
-//        String s = stringRedisTemplate.opsForValue().get(key);
-//        if (s != null){
-//            allUserApply = JSONUtil.toList(s,Recruit.class);
-//            System.out.println("从redis中获取");
-//        }else {
-//            allUserApply = applyMapper.getAllUserApply(userId, like);
-//            System.out.println("从数据库获取");
-//            String jsonStr = JSONUtil.toJsonStr(allUserApply);
-//            stringRedisTemplate.opsForValue().set(key,jsonStr, Duration.ofMinutes(30L));
-//        }
-        allUserApply = applyMapper.getAllUserApply(userId, like);
+        String s = stringRedisTemplate.opsForValue().get(key);
+        if (s != null){
+            allUserApply = JSONUtil.toList(s,Recruit.class);
+            System.out.println("从redis中获取");
+        }else {
+            allUserApply = applyMapper.getAllUserApply(userId, like);
+            System.out.println("从数据库获取");
+            String jsonStr = JSONUtil.toJsonStr(allUserApply);
+            /*存储到数据库中,有效五分钟*/
+            stringRedisTemplate.opsForValue().set(key,jsonStr, Duration.ofMinutes(5L));
+        }
         return new PageInfo<>(allUserApply);
     }
 }

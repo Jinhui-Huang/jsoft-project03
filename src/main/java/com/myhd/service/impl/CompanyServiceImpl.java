@@ -31,7 +31,7 @@ public class CompanyServiceImpl implements ICompanyService {
     @Override
     public Company getCompanyInfo(Integer companyId) {
         String key = "company:" + companyId;
-        Company companyInfo = new Company();
+        Company companyInfo;
         String s = stringRedisTemplate.opsForValue().get(key);
         if (s != null){
             companyInfo = JSONUtil.toBean(s, Company.class);
