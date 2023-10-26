@@ -2,14 +2,8 @@ package com.myhd.service;
 
 import com.github.pagehelper.PageInfo;
 import com.myhd.entity.Recruit;
-
-import java.util.List;
-
 import com.myhd.util.Result;
 
-import com.myhd.entity.Recruit;
-
-import java.util.List;
 
 /**
  * <p>

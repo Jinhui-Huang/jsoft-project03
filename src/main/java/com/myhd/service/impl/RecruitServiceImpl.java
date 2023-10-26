@@ -3,15 +3,7 @@ package com.myhd.service.impl;
 import cn.hutool.json.JSONUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import cn.hutool.json.JSONUtil;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.myhd.dto.Filed;
-import com.myhd.entity.Company;
 import com.myhd.entity.Recruit;
 import com.myhd.exception.BusinessException;
 import com.myhd.mapper.RecruitMapper;
@@ -20,18 +12,14 @@ import lombok.val;
 import com.myhd.util.Code;
 import com.myhd.util.Result;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.stereotype.Indexed;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.Duration;
 import java.util.List;
 
-import javax.annotation.Resource;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 
 /**
