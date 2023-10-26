@@ -26,7 +26,7 @@ public class GlobBeanFactory {
         return new Interceptor[]{new PageInterceptor()};
     }
 
-    /*配置pageHelper*/
+    /**配置pageHelper*/
     @Bean
     public PageHelper pageHelper(){
         return new PageHelper();
