@@ -27,6 +27,4 @@ public class Code {
     public static final Integer POST_OK = 300001;
 
     public static final Integer POST_FAIL = 300000;
-
-    public static final Integer SYSTEM_ERR = 800000;
 }
