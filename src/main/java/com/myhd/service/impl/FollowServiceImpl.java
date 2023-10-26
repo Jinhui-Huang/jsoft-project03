@@ -41,26 +41,55 @@ public class FollowServiceImpl implements IFollowService {
         }
     }
 
+    /**
+     * @description: 点击关注进行企业关注,第一次关注时进行关注表插入,后续执行关注时进行状态修改
+     * @param userId 用户编号
+     * @param companyId 企业编号
+     * @return: com.myhd.util.Result
+     * @author CYQH
+     * @date: 2023/10/26 下午3:23
+     */
     @Override
-    public Boolean follow(Integer userId,Integer companyId) {
+    public Result follow(Integer userId,Integer companyId) {
         Follow followStatus = followMapper.findFollowStatus(userId, companyId);
         Follow follow = new Follow();
         follow.setUserId(userId);
         follow.setCompanyId(companyId);
         follow.setFollowStatus(1);
+        boolean flag = false;
         if (followStatus == null){
-            return followMapper.saveFollowInfo(follow) == 1;
+            if (followMapper.saveFollowInfo(follow) == 1){
+                flag = true;
+            }
         }else {
-            return followMapper.setFollowStatus(follow) == 1;
+            if (followMapper.setFollowStatus(follow) == 1){
+                flag = true;
+            }
         }
+        if (flag){
+            return Result.ok("关注成功");
+        }
+        return Result.fail("关注失败");
     }
 
+    /**
+     * @description: 点击取消关注进行取消关注
+     * @param userId 用户编号
+     * @param companyId 企业编号
+     * @return: com.myhd.util.Result
+     * @author CYQH
+     * @date: 2023/10/26 下午3:25
+     */
     @Override
-    public Boolean unfollow(Integer userId,Integer companyId) {
+    public Result unfollow(Integer userId,Integer companyId) {
+
         Follow follow = new Follow();
         follow.setUserId(userId);
         follow.setCompanyId(companyId);
         follow.setFollowStatus(0);
-        return followMapper.setFollowStatus(follow) == 1;
+        if (followMapper.setFollowStatus(follow) == 1){
+            return Result.ok("取消关注成功");
+        }
+        return Result.fail("取消关注失败");
     }
 }

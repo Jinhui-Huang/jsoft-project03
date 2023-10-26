@@ -29,7 +29,7 @@ public interface IFollowService {
      * @author CYQH
      * @date: 2023/10/25 下午5:53
      */
-    Boolean follow(Integer userId,Integer companyId);
+    Result follow(Integer userId,Integer companyId);
 
 
     /**
@@ -38,6 +38,6 @@ public interface IFollowService {
      * @author CYQH
      * @date: 2023/10/25 下午5:54
      */
-    Boolean unfollow(Integer userId,Integer companyId);
+    Result unfollow(Integer userId,Integer companyId);
 
 }
