@@ -47,12 +47,12 @@ public class ApplyServiceImpl implements IApplyService {
         try {
             integer = applyMapper.insertApplyInfo(apply);
         } catch (DuplicateKeyException e) {
-            return new Result(Code.POST_FAIL,false,"申请职位失败");
+            return Result.fail(Code.POST_FAIL,false,"申请职位失败");
         }
         if (integer == 1){
-            return new Result(Code.POST_OK,true,"申请职位成功");
+            return Result.ok(Code.POST_OK,true,"申请职位成功");
         }else {
-            return new Result(Code.POST_FAIL,false,"申请职位失败");
+            return Result.fail(Code.POST_FAIL,false,"申请职位失败");
         }
     }
 
@@ -82,6 +82,6 @@ public class ApplyServiceImpl implements IApplyService {
             stringRedisTemplate.opsForValue().set(key,jsonStr, Duration.ofMinutes(5L));
         }
         PageInfo<Recruit> pageInfo = new PageInfo<>(allUserApply);
-        return new Result(Code.GET_OK,pageInfo,"查询成功");
+        return Result.ok(Code.GET_OK,pageInfo,"查询成功");
     }
 }
