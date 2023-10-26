@@ -1,5 +1,7 @@
 package com.myhd.service;
 
+import com.myhd.util.Result;
+
 import com.myhd.entity.Recruit;
 
 import java.util.List;
@@ -52,4 +54,11 @@ public interface IRecruitService {
      * @return
      */
     Recruit acquireRecruitInfo(Integer companyId,Integer recruitId);
+    /**
+     * Description: getFields 服务层中获取redis中存放的相关领域
+     * @return com.myhd.util.Result
+     * @author jinhui-huang
+     * @Date 2023/10/26
+     * */
+    Result getFields();
 }
