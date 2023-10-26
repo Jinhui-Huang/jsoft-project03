@@ -91,11 +91,11 @@
             <artifactId>java-jwt</artifactId>
             <version>4.4.0</version>
         </dependency>
-        <!--TODO pagehellper依赖-->
+        <!--TODO 采用spring-boot的pagehellper依赖-->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>5.3.3</version>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.4.7</version>
         </dependency>
 
         <!-- TODO 阿里巴巴邮箱服务 V2.0 SDK  -->

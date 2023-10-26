@@ -38,25 +38,5 @@ public class Apply implements Serializable {
      */
     private Integer companyId;
 
-    /**
-     * 企业名称
-     */
-    private String companyName;
-
-    /**
-     * 工作地址
-     */
-    private String recruitAddress;
-
-    /**
-     * 刷新时间
-     */
-    private Date updateTime;
-
-    /**
-     * 薪水
-     */
-    private Double salary;
-
 
 }
