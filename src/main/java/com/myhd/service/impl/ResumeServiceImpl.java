@@ -1,11 +1,17 @@
 package com.myhd.service.impl;
 
 import com.myhd.entity.Resume;
+import com.myhd.exception.BusinessException;
 import com.myhd.mapper.ResumeMapper;
 import com.myhd.service.IResumeService;
+import com.myhd.util.Code;
+import com.myhd.util.Result;
+import lombok.val;
+import org.apache.ibatis.jdbc.SQL;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.SQLException;
 
 /**
  * <p>
@@ -29,8 +35,9 @@ public class ResumeServiceImpl implements IResumeService {
      * @return Resume
      */
     @Override
-    public Resume acquireResumeInfo(Integer userId) {
-        return resumeMapper.getResumeByUserId(userId);
+    public Result acquireResumeInfo(Integer userId) {
+        Resume resume = resumeMapper.getResumeByUserId(userId);
+        return resume == null ? new Result(Code.FAIL, null,"简历不存在"):new Result(Code.OK, resume,"获取成功");
     }
 
     /**
@@ -41,7 +48,13 @@ public class ResumeServiceImpl implements IResumeService {
      * @return Boolean
      */
     @Override
-    public Boolean saveResumeInfo(Resume resume) {
-        return resumeMapper.insertResume(resume) ==1 ?true:false;
+    public Result saveResumeInfo(Resume resume) {
+        Integer i = null;
+        try {
+            i = resumeMapper.insertResume(resume);
+        } catch (Exception e) {
+            throw new BusinessException(Code.FAIL,"保存失败,简历已存在");
+        }
+        return i == 1 ? new Result(Code.OK, true,"添加成功"):new Result(Code.FAIL, false,"添加失败");
     }
 }
