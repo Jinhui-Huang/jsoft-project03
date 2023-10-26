@@ -3,10 +3,16 @@ package com.myhd.dto;
 import lombok.Data;
 
 /**
- * @Classname ToEmail
- * @Description TODO
- * @Date 2023/10/25 下午9:49
- * @Created by joneelmo
+ * Description: ToEmail
+ * <br></br>
+ * className: ToEmail
+ * <br></br>
+ * packageName: com.myhd.dto
+ *
+ * @author jinhui-huang
+ * @version 1.0
+ * @email 2634692718@qq.com
+ * @Date: 2023/10/25 21:48
  */
 @Data
 public class ToEmail {

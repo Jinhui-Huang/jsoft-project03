@@ -32,11 +32,11 @@ public interface UserMapper {
      * @param loginFormDTO
      * @return int 1 用户存在 0 用户不存在
      */
-    Integer isUserExist(FormDTO loginFormDTO);
+    Integer isUserExist(FormDTO formDTO);
 
     /**
      * @description 根据输入的参数查找用户信息
-     * 该方法可以返回用户的真实密码值，用于验证用户输入的密码是否正确
+     * 该方法用于验证密码是否正确
      * @author JoneElmo && CYQH
      * @date 2023-10-24 09:07
      * @param loginFormDTO 登陆的表单数据传输对象
