@@ -1,5 +1,6 @@
 package com.myhd.service;
 
+import com.github.pagehelper.PageInfo;
 import com.myhd.entity.Apply;
 import com.myhd.entity.Recruit;
 
@@ -35,6 +36,6 @@ public interface IApplyService {
      * @param userId 当前用户编号
      * @return
      */
-    List<Recruit> getAllUserApply(Integer userId, String like);
+    PageInfo<Recruit> getAllUserApply(Integer userId, String like, Integer pageNum);
 
 }
