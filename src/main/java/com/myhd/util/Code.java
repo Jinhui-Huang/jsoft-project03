@@ -19,6 +19,8 @@ public class Code {
 
     public static final Integer BUSINESS_ERR = 700000;
 
+    public static final Integer SYSTEM_ERR = 800000;
+
     public static final Integer GET_OK = 200001;
     public static final Integer GET_FAIL = 200000;
 

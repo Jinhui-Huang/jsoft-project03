@@ -15,7 +15,7 @@ import lombok.Data;
  * @Date: 2023/10/22 17:00
  */
 @Data
-public class ForgetFormDTO {
+public class FormDTO {
     private Integer userId;
     private String phone;
     private String userEmail;
