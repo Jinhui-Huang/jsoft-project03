@@ -58,6 +58,16 @@ public interface RecruitMapper {
     List<Recruit> getLikeInfo(String like);
 
     /**
+     * @description 首页快捷查询时，点击对应的领域按钮，查询招聘信息
+     * 领域编号101 202 303这种形式
+     * @author JoneElmo
+     * @date 2023-10-26 08:59
+     * @param jobField 领域编号
+     * @return
+     */
+    List<Recruit> getInfoViaQuickMethod(Integer jobField);
+
+    /**
      * @description 高薪职位查询
      * 需要同企业表连接，获取公司logo
      * 根据薪资max值降序排列

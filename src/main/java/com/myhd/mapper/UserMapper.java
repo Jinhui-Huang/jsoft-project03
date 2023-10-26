@@ -29,7 +29,7 @@ public interface UserMapper {
      * 动态sql通过手机号或者邮箱来查询
      * @author JoneElmo && CYQH
      * @date 2023-10-24 08:56
-     * @param loginFormDTO
+     * @param
      * @return int 1 用户存在 0 用户不存在
      */
     Integer isUserExist(FormDTO formDTO);
@@ -39,7 +39,7 @@ public interface UserMapper {
      * 该方法用于验证密码是否正确
      * @author JoneElmo && CYQH
      * @date 2023-10-24 09:07
-     * @param loginFormDTO 登陆的表单数据传输对象
+     * @param
      * @return User 结果用于对比
      */
     User findByArgs(FormDTO formDTO);
