@@ -10,7 +10,7 @@
         values (#{userId},#{userName},#{email},#{phone},#{password})
     </insert>
 
-    <select id="isUserExist" parameterType="com.myhd.dto.LoginFormDTO" resultType="int">
+    <select id="isUserExist" parameterType="com.myhd.dto.FormDTO" resultType="int">
         select count(tb_id) from tb_user
         <where>
             <if test="phone != null">
@@ -22,7 +22,7 @@
         </where>
     </select>
 
-    <select id="findByArgs" resultType="com.myhd.entity.User" parameterType="com.myhd.dto.LoginFormDTO">
+    <select id="findByArgs" resultType="com.myhd.entity.User" parameterType="com.myhd.dto.FormDTO">
         select user_name,user_id,email,phone,password from tb_user
         <where>
             <if test="phone != null">
