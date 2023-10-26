@@ -8,6 +8,7 @@ import com.myhd.entity.Recruit;
 import com.myhd.exception.BusinessException;
 import com.myhd.mapper.RecruitMapper;
 import com.myhd.service.IRecruitService;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import com.myhd.util.Code;
 import com.myhd.util.Result;
@@ -31,6 +32,7 @@ import java.util.Map;
  * @since 2023-10-23
  */
 @Service
+@Slf4j
 public class RecruitServiceImpl implements IRecruitService {
 
     @Resource
@@ -92,26 +94,6 @@ public class RecruitServiceImpl implements IRecruitService {
     /**
      * @description
      * @author JoneElmo
-     * @date 2023-10-26 09:55
-     * @param
-     * @return List<Recruit>
-     */
-    @Override
-    public Result acquireHighSalaryList() {
-        List<Recruit> highSalary = recruitMapper.getHighSalary();
-        if (highSalary!=null){
-            String jsonStr = JSONUtil.toJsonStr(highSalary);
-            String key = "index:highSalary";
-            stringRedisTemplate.opsForValue().set(key,jsonStr);
-            return new Result(Code.GET_OK,highSalary, "获取高薪职位列表成功");
-        }else {
-            return new Result(Code.FAIL, null, "获取高薪职位列表失败");
-        }
-    }
-
-    /**
-     * @description
-     * @author JoneElmo
      * @date 2023-10-26 09:38
      * @param useQuickSearch true:启用快捷查询
     args
@@ -144,66 +126,46 @@ public class RecruitServiceImpl implements IRecruitService {
     }
 
     /**
-     * @description
-     * @author JoneElmo
-     * @date 2023-10-26 09:55
-     * @param companyId
-     * @return List<Recruit>
-     */
-    @Override
-    public Result acquireRecruitByCompanyId(Integer companyId) {
-        List<Recruit> list = recruitMapper.getRecruitByCompanyId(companyId);
-        if (list.size()>0){
-            return new Result(Code.OK,list,"获取成功") ;
-        }else {
-            return new Result(Code.FAIL,null,"获取失败，数据不存在") ;
-        }
-
-    }
-
-    /**
-     * @description 职位信息页面 展示相关信息功能
-     * @author JoneElmo
-     * @date 2023-10-26 09:56
-     * @param companyId
-    recruitId
+     * @description 高薪职位查询
+     * 需要同企业表连接，获取公司logo
+     * 根据薪资max值降序排列
+     * 使用mybatis resultmap来映射这个图标字段
+     * @author JoneElmo && CYQH
+     * @date 2023-10-24 10:53
      * @return Recruit
      */
     @Override
-    public Result acquireRecruitInfo(Integer companyId, Integer recruitId) {
-        Recruit recruit = recruitMapper.getRecruitInfo(companyId, recruitId);
-        if (recruit != null) {
-            String key = "job:" + companyId + ":" + recruitId;
-            val jsonStr = JSONUtil.toJsonStr(recruit);
-            stringRedisTemplate.opsForValue().set(key, jsonStr, Duration.ofMinutes(10));
-            return new Result(Code.OK, recruit, "获取成功");
-        }else {
-            return new Result(Code.FAIL, null, "获取失败，数据不存在");
-        }
-    }
-
-
-    @Override
-    public PageInfo<Recruit> getHighSalary() {
+    public Result acquireHighSalaryList() {
         PageHelper.startPage(1,10);
         String key = "index:highSalary";
-
         List<Recruit> highSalary;
         String s = stringRedisTemplate.opsForValue().get(key);
         if (s != null){
             highSalary = JSONUtil.toList(s,Recruit.class);
-            System.out.println("从redis中获取");
+            log.info("从redis中获取");
         }else {
             highSalary = recruitMapper.getHighSalary();
-            System.out.println("从数据库获取");
+            log.info("从数据库获取");
             String jsonStr = JSONUtil.toJsonStr(highSalary);
             stringRedisTemplate.opsForValue().set(key,jsonStr,Duration.ofMinutes(10L));
         }
-        return new PageInfo<>(highSalary);
+        PageInfo pageInfo = new PageInfo<>(highSalary);
+        return new  Result(Code.OK,pageInfo,"高薪职位查询成功");
     }
 
+    /**
+     * @description
+     * 企业详情页面查询该企业下所有招聘岗位功能
+     * 需要分页
+     * 根据企业ID查询招聘信息
+     * 通过和申请表外连接来查询 判断是否被申请 （通过user_id来判断）
+     * @author JoneElmo && CYQH
+     * @date 2023-10-24 10:07
+     * @param companyId 企业编号
+     * @return RECRUIT 招聘信息
+     */
     @Override
-    public PageInfo<Recruit> getRecruitByCompanyId(Integer companyId,Integer pageNum) {
+    public Result acquireRecruitByCompanyId(Integer companyId,Integer pageNum) {
         PageHelper.startPage(pageNum,5);
         String key = "company:"+companyId+":"+pageNum;
 
@@ -211,51 +173,79 @@ public class RecruitServiceImpl implements IRecruitService {
         String s = stringRedisTemplate.opsForValue().get(key);
         if (s != null){
             companyRecruit = JSONUtil.toList(s,Recruit.class);
-            System.out.println("从redis中获取");
+            log.info("从redis中获取");
         }else {
             companyRecruit = recruitMapper.getRecruitByCompanyId(companyId);
-            System.out.println("从数据库获取");
+            log.info("从数据库获取");
             String jsonStr = JSONUtil.toJsonStr(companyRecruit);
             stringRedisTemplate.opsForValue().set(key,jsonStr,Duration.ofMinutes(10L));
         }
-        return new PageInfo<>(companyRecruit);
+        PageInfo pageInfo = new PageInfo<>(companyRecruit);
+        return new Result(Code.GET_OK,pageInfo,"企业信息获取成功");
     }
 
+    /**
+     * @description 职位信息页面 展示相关信息功能
+     * 通过和申请表外连接判断是否已经被申请 （通过user_id来判断）
+     * 如果user_id为空 则表示该岗位没有被申请 否则表示岗位被申请
+     * 示例：
+     * select r.*,a.* from tb_recruit r
+     * left join tb_apply a
+     * on r.id = a.recruit_id
+     * @author JoneElmo && CYQH
+     * @date 2023-10-24 10:27
+     * @param
+     * @return
+     */
     @Override
-    public Recruit getRecruitInfo(Integer companyId, Integer recruitId) {
+    public Result acquireRecruitInfo(Integer companyId, Integer recruitId) {
         String key = "job:" + companyId+":"+recruitId;
         Recruit recruitInfo;
         String s = stringRedisTemplate.opsForValue().get(key);
         if (s != null){
             recruitInfo = JSONUtil.toBean(s, Recruit.class);
-            System.out.println("从redis中获取");
+            log.info("从redis中获取");
         }else {
             recruitInfo = recruitMapper.getRecruitInfo(companyId,recruitId);
-            System.out.println("从数据库获取");
+            log.info("从数据库获取");
             String jsonStr = JSONUtil.toJsonStr(recruitInfo);
             if (jsonStr != null){
                 stringRedisTemplate.opsForValue().set(key,jsonStr,Duration.ofMinutes(30L));
             }
         }
-        return recruitInfo;
+        if(recruitInfo != null){
+            return new Result(Code.GET_OK,recruitInfo,"获取职位信息成功");
+        }else {
+            return new Result(Code.GET_FAIL, null,"获取职位信息失败");
+        }
     }
 
+    /**
+     * @description 模糊查询
+     * 查询所有岗位信息  需要分页 pageInfo
+     * 和申请表外连接 判断是否被申请
+     * @author JoneElmo && CYQH
+     * @date 2023-10-24 10:39
+     * @param like 模糊查询的参数  招聘的职位关键字(recruit_name)
+     * @return
+     */
     @Override
-    public PageInfo<Recruit> getLikeInfo(String like,Integer pageNum) {
+    public Result getLikeInfo(String like,Integer pageNum) {
         PageHelper.startPage(pageNum,5);
         String key = "index:"+like+":"+pageNum;
         List<Recruit> likeInfo;
         String s = stringRedisTemplate.opsForValue().get(key);
         if (s != null){
             likeInfo = JSONUtil.toList(s,Recruit.class);
-            System.out.println("从redis中获取");
+            log.info("从redis中获取");
         }else {
             likeInfo = recruitMapper.getLikeInfo(like);
-            System.out.println("从数据库获取");
+            log.info("从数据库获取");
             String jsonStr = JSONUtil.toJsonStr(likeInfo);
             /*存储到数据库中,有效五分钟*/
             stringRedisTemplate.opsForValue().set(key,jsonStr, Duration.ofMinutes(5L));
         }
-        return new PageInfo<>(likeInfo);
+        PageInfo pageInfo = new PageInfo<>(likeInfo);
+        return new Result(Code.GET_OK,pageInfo,"获取数据成功");
     }
 }

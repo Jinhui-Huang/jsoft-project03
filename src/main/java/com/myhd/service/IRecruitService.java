@@ -15,14 +15,6 @@ import com.myhd.util.Result;
  */
 public interface IRecruitService {
 
-    /**
-     * @description 高薪职位查询
-     * @author JoneElmo
-     * @date 2023-10-26 09:22
-     * @param
-     * @return
-     */
-    Result acquireHighSalaryList();
 
     /**
      * @description 顶部搜索框查询功能
@@ -34,25 +26,6 @@ public interface IRecruitService {
      */
     Result searchRecruit(Boolean useQuickSearch,Object args,Integer...pageNum);
 
-    /**
-     * @description 企业详情页面查询该企业下所有招聘岗位功能
-     * 通过企业编号查询其招聘信息
-     * @author JoneElmo
-     * @date 2023-10-26 09:29
-     * @param companyId
-     * @return
-     */
-    Result acquireRecruitByCompanyId(Integer companyId);
-
-    /**
-     * @description 职位详情页面展示相关信息的功能
-     * @author JoneElmo
-     * @date 2023-10-26 09:33
-     * @param companyId 企业编号
-     * @param recruitId 招聘编号
-     * @return
-     */
-    Result acquireRecruitInfo(Integer companyId,Integer recruitId);
     /**
      * Description: getFields 服务层中获取redis中存放的相关领域
      * @return com.myhd.util.Result
@@ -69,7 +42,7 @@ public interface IRecruitService {
      * @date 2023-10-24 10:53
      * @return Recruit
      */
-    PageInfo<Recruit> getHighSalary();
+    Result acquireHighSalaryList();
 
     /**
      * @description
@@ -82,7 +55,7 @@ public interface IRecruitService {
      * @param companyId 企业编号
      * @return RECRUIT 招聘信息
      */
-    PageInfo<Recruit> getRecruitByCompanyId(Integer companyId,Integer pageNum);
+    Result acquireRecruitByCompanyId(Integer companyId,Integer pageNum);
 
     /**
      * @description 职位信息页面 展示相关信息功能
@@ -97,7 +70,7 @@ public interface IRecruitService {
      * @param
      * @return
      */
-    Recruit getRecruitInfo(Integer companyId,Integer recruitId);
+    Result acquireRecruitInfo(Integer companyId,Integer recruitId);
 
     /**
      * @description 模糊查询
@@ -108,6 +81,6 @@ public interface IRecruitService {
      * @param like 模糊查询的参数  招聘的职位关键字(recruit_name)
      * @return
      */
-    PageInfo<Recruit> getLikeInfo(String like,Integer pageNum);
+    Result getLikeInfo(String like,Integer pageNum);
 
 }
