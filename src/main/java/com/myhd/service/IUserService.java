@@ -2,6 +2,7 @@ package com.myhd.service;
 
 import com.myhd.dto.FormDTO;
 import com.myhd.entity.User;
+import com.myhd.util.Result;
 
 /**
  * <p>
@@ -20,7 +21,7 @@ public interface IUserService {
      * @param
      * @return Boolean 注册是否成功
      */
-    Boolean registerUser(User user);
+    Result registerUser(User user);
 
     /**
      * @description 登陆功能。需要获用户的信息进行对比
@@ -29,7 +30,7 @@ public interface IUserService {
      * @param formDTO 表单信息
      * @return Boolean 登陆是否成功
      */
-    Boolean loginUser(FormDTO formDTO);
+    Result loginUser(FormDTO formDTO);
 
     /**
      * @description 忘记密码功能
@@ -38,5 +39,5 @@ public interface IUserService {
      * @param
      * @return Boolean 修改密码是否成功
      */
-    Boolean changePassword(User user);
+    Result changePassword(User user);
 }

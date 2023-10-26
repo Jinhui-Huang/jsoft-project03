@@ -1,6 +1,7 @@
 package com.myhd.service;
 
 import com.myhd.entity.Resume;
+import com.myhd.util.Result;
 
 /**
  * <p>
@@ -20,7 +21,7 @@ public interface IResumeService {
      * @param
      * @return Resume
      */
-    Resume acquireResumeInfo(Integer userId);
+    Result acquireResumeInfo(Integer userId);
 
     /**
      * @description 插入简历信息
@@ -29,6 +30,6 @@ public interface IResumeService {
      * @param
      * @return
      */
-    Boolean saveResumeInfo(Resume resume);
+    Result saveResumeInfo(Resume resume);
 
 }
