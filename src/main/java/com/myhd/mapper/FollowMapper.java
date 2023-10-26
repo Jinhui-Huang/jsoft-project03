@@ -35,7 +35,7 @@ public interface FollowMapper {
 
     /**
      * @description 设置关注状态
-     * 用户点击关注企业后，会将信息插入关注表中
+     * 用户点击关注企业后，会将关注状态更新
      * @author JoneElmo && CYQH
      * @date 2023-10-24 09:28
      * @param follow 关注信息对象
