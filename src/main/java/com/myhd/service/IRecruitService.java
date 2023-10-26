@@ -23,7 +23,7 @@ public interface IRecruitService {
      * @param
      * @return
      */
-    List<Recruit> acquireHighSalaryList();
+    Result acquireHighSalaryList();
 
     /**
      * @description 顶部搜索框查询功能
@@ -33,7 +33,7 @@ public interface IRecruitService {
      * @param args 查询的参数
      * @return
      */
-    List<Recruit> searchRecruit(Boolean useQuickSearch,Object args);
+    Result searchRecruit(Boolean useQuickSearch,Object args,Integer...pageNum);
 
     /**
      * @description 企业详情页面查询该企业下所有招聘岗位功能
@@ -43,7 +43,7 @@ public interface IRecruitService {
      * @param companyId
      * @return
      */
-    List<Recruit> acquireRecruitByCompanyId(Integer companyId);
+    Result acquireRecruitByCompanyId(Integer companyId);
 
     /**
      * @description 职位详情页面展示相关信息的功能
@@ -53,7 +53,7 @@ public interface IRecruitService {
      * @param recruitId 招聘编号
      * @return
      */
-    Recruit acquireRecruitInfo(Integer companyId,Integer recruitId);
+    Result acquireRecruitInfo(Integer companyId,Integer recruitId);
     /**
      * Description: getFields 服务层中获取redis中存放的相关领域
      * @return com.myhd.util.Result
