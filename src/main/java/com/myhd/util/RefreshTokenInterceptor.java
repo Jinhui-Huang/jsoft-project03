@@ -2,6 +2,7 @@ package com.myhd.util;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
+import com.myhd.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -41,15 +42,13 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         /*TODO 1. 获取header中的token*/
         Object token = request.getHeader("authorization");
-        if (StrUtil.isBlankIfStr(token)) {
-            return true;
-        }
+
         /*TODO 2. 基于token获取redis中的用户*/
 
         /*TODO 3. 判断用户是否存在*/
 
         /*TODO 5. 存在, 保存用户信息到ThreadLocal*/
-
+        UserHolder.saveUser(new User());
         /*TODO 6. 刷新token有效期*/
 
         return true;
