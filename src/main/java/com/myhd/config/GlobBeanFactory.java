@@ -1,9 +1,10 @@
 package com.myhd.config;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInterceptor;
+import org.apache.ibatis.plugin.Interceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 /**
  * Description: GlobBeanFactory 全局bean工厂类
@@ -19,5 +20,16 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
  */
 @Configuration
 public class GlobBeanFactory {
+    /**pageHelper插件*/
+    @Bean
+    public Interceptor[] plugins() {
+        return new Interceptor[]{new PageInterceptor()};
+    }
+
+    /**配置pageHelper*/
+    @Bean
+    public PageHelper pageHelper(){
+        return new PageHelper();
+    }
 
 }

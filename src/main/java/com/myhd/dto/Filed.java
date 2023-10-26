@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Comparator;
+
 /**
  * Description: Filed
  * <br></br>
@@ -21,5 +23,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Filed {
     private Integer jobFiled;
-    private String fileName;
+    private String filedName;
 }
