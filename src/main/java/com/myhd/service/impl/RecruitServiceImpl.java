@@ -9,7 +9,6 @@ import com.myhd.exception.BusinessException;
 import com.myhd.mapper.RecruitMapper;
 import com.myhd.service.IRecruitService;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import com.myhd.util.Code;
 import com.myhd.util.Result;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -149,7 +148,7 @@ public class RecruitServiceImpl implements IRecruitService {
             String jsonStr = JSONUtil.toJsonStr(highSalary);
             stringRedisTemplate.opsForValue().set(key,jsonStr,Duration.ofMinutes(10L));
         }
-        PageInfo pageInfo = new PageInfo<>(highSalary);
+        PageInfo<Recruit> pageInfo = new PageInfo<>(highSalary);
         return new  Result(Code.OK,pageInfo,"高薪职位查询成功");
     }
 
@@ -180,7 +179,7 @@ public class RecruitServiceImpl implements IRecruitService {
             String jsonStr = JSONUtil.toJsonStr(companyRecruit);
             stringRedisTemplate.opsForValue().set(key,jsonStr,Duration.ofMinutes(10L));
         }
-        PageInfo pageInfo = new PageInfo<>(companyRecruit);
+        PageInfo<Recruit> pageInfo = new PageInfo<>(companyRecruit);
         return new Result(Code.GET_OK,pageInfo,"企业信息获取成功");
     }
 
@@ -245,7 +244,7 @@ public class RecruitServiceImpl implements IRecruitService {
             /*存储到数据库中,有效五分钟*/
             stringRedisTemplate.opsForValue().set(key,jsonStr, Duration.ofMinutes(5L));
         }
-        PageInfo pageInfo = new PageInfo<>(likeInfo);
+        PageInfo<Recruit> pageInfo = new PageInfo<>(likeInfo);
         return new Result(Code.GET_OK,pageInfo,"获取数据成功");
     }
 }

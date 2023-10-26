@@ -7,13 +7,14 @@ import com.myhd.entity.Apply;
 import com.myhd.entity.Recruit;
 import com.myhd.mapper.ApplyMapper;
 import com.myhd.service.IApplyService;
+import com.myhd.util.Code;
+import com.myhd.util.Result;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,20 +34,40 @@ public class ApplyServiceImpl implements IApplyService {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
+    /**
+     * @description 点击立即申请按钮，发送信息
+     * @author JoneElmo && CYQH
+     * @date 2023-10-24 10:25
+     * @param apply 申请的数据对象
+     * @return Result
+     */
     @Override
-    public Boolean insertApplyInfo(Apply apply) {
+    public Result insertApplyInfo(Apply apply) {
         Integer integer = null;
         try {
             integer = applyMapper.insertApplyInfo(apply);
         } catch (DuplicateKeyException e) {
-            return false;
+            return new Result(Code.POST_FAIL,false,"申请职位失败");
         }
-        return integer == 1;
+        if (integer == 1){
+            return new Result(Code.POST_OK,true,"申请职位成功");
+        }else {
+            return new Result(Code.POST_FAIL,false,"申请职位失败");
+        }
     }
 
+    /**
+     * @description: 在我的职位页面显示所有已申请的职位,模糊查询和分页
+     * @param userId 用户编号
+     * @param like 模糊查询关键字
+     * @param pageNum 分页页码
+     * @return: com.myhd.util.Result
+     * @author CYQH
+     * @date: 2023/10/26 下午2:42
+     */
     @Override
-    public PageInfo<Recruit> getAllUserApply(Integer userId, String like,Integer pageNum) {
-        PageHelper.startPage(pageNum,1);
+    public Result getAllUserApply(Integer userId, String like,Integer pageNum) {
+        PageHelper.startPage(pageNum,5);
         String key = userId+":"+like+":"+pageNum;
         List<Recruit> allUserApply;
         String s = stringRedisTemplate.opsForValue().get(key);
@@ -60,6 +81,7 @@ public class ApplyServiceImpl implements IApplyService {
             /*存储到数据库中,有效五分钟*/
             stringRedisTemplate.opsForValue().set(key,jsonStr, Duration.ofMinutes(5L));
         }
-        return new PageInfo<>(allUserApply);
+        PageInfo<Recruit> pageInfo = new PageInfo<>(allUserApply);
+        return new Result(Code.GET_OK,pageInfo,"查询成功");
     }
 }
