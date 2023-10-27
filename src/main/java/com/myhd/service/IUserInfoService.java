@@ -1,6 +1,7 @@
 package com.myhd.service;
 
 import com.myhd.entity.UserInfo;
+import com.myhd.util.Result;
 
 /**
  * <p>
@@ -18,7 +19,7 @@ public interface IUserInfoService {
      * @param userInfo 个人信息
      * @return int 1成功 0失败
      */
-    Boolean addUserInfo(UserInfo userInfo);
+    Result addUserInfo(UserInfo userInfo);
 
     /**
      * @description 根据用户编号查询信息
@@ -28,6 +29,6 @@ public interface IUserInfoService {
      * @param userId 用户编号
      * @return UserInfo 用户详细信息
      */
-    UserInfo  getUserInfoById(Integer userId);
+    Result getUserInfoById(Integer userId);
 
 }

@@ -1,5 +1,6 @@
 package com.myhd.service;
 
+import com.myhd.util.Result;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,7 +21,7 @@ public interface IFollowService {
      * @date: 2023/10/25 下午5:59
      *
      */
-    Boolean checkFollow(Integer userId,Integer companyId);
+    Result checkFollow(Integer userId, Integer companyId);
 
     /**
      * @description: 点击关注进行企业关注,根据是否是第一次关注选择插入还是更新,将关注状态置为1
@@ -28,7 +29,7 @@ public interface IFollowService {
      * @author CYQH
      * @date: 2023/10/25 下午5:53
      */
-    Boolean follow(Integer userId,Integer companyId);
+    Result follow(Integer userId,Integer companyId);
 
 
     /**
@@ -37,6 +38,6 @@ public interface IFollowService {
      * @author CYQH
      * @date: 2023/10/25 下午5:54
      */
-    Boolean unfollow(Integer userId,Integer companyId);
+    Result unfollow(Integer userId,Integer companyId);
 
 }

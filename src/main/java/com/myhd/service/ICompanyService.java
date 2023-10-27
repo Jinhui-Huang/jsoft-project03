@@ -1,6 +1,7 @@
 package com.myhd.service;
 
 import com.myhd.entity.Company;
+import com.myhd.util.Result;
 
 /**
  * <p>
@@ -20,6 +21,6 @@ public interface ICompanyService {
      * @param companyId 企业id 唯一标识符
      * @return Company 企业信息
      */
-    Company getCompanyInfo(Integer companyId);
+    Result getCompanyInfo(Integer companyId);
 
 }

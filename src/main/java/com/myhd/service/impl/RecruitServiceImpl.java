@@ -9,7 +9,6 @@ import com.myhd.exception.BusinessException;
 import com.myhd.mapper.RecruitMapper;
 import com.myhd.service.IRecruitService;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import com.myhd.util.Code;
 import com.myhd.util.Result;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -121,7 +120,7 @@ public class RecruitServiceImpl implements IRecruitService {
             stringRedisTemplate.opsForValue().set(key, jsonStr, Duration.ofMinutes(10));
             PageHelper.startPage(pageNum[0], pageSize);
             recruitPageInfo = new PageInfo(result);
-            return new Result(Code.OK, recruitPageInfo, "查询成功");
+            return Result.ok(Code.OK, recruitPageInfo, "查询成功");
         }
     }
 
@@ -149,8 +148,8 @@ public class RecruitServiceImpl implements IRecruitService {
             String jsonStr = JSONUtil.toJsonStr(highSalary);
             stringRedisTemplate.opsForValue().set(key,jsonStr,Duration.ofMinutes(10L));
         }
-        PageInfo pageInfo = new PageInfo<>(highSalary);
-        return new  Result(Code.OK,pageInfo,"高薪职位查询成功");
+        PageInfo<Recruit> pageInfo = new PageInfo<>(highSalary);
+        return Result.ok(Code.OK,pageInfo,"高薪职位查询成功");
     }
 
     /**
@@ -180,8 +179,8 @@ public class RecruitServiceImpl implements IRecruitService {
             String jsonStr = JSONUtil.toJsonStr(companyRecruit);
             stringRedisTemplate.opsForValue().set(key,jsonStr,Duration.ofMinutes(10L));
         }
-        PageInfo pageInfo = new PageInfo<>(companyRecruit);
-        return new Result(Code.GET_OK,pageInfo,"企业信息获取成功");
+        PageInfo<Recruit> pageInfo = new PageInfo<>(companyRecruit);
+        return Result.ok(Code.GET_OK,pageInfo,"企业信息获取成功");
     }
 
     /**
@@ -208,15 +207,15 @@ public class RecruitServiceImpl implements IRecruitService {
         }else {
             recruitInfo = recruitMapper.getRecruitInfo(companyId,recruitId);
             log.info("从数据库获取");
-            String jsonStr = JSONUtil.toJsonStr(recruitInfo);
-            if (jsonStr != null){
+            if (recruitMapper != null){
+                String jsonStr = JSONUtil.toJsonStr(recruitInfo);
                 stringRedisTemplate.opsForValue().set(key,jsonStr,Duration.ofMinutes(30L));
             }
         }
         if(recruitInfo != null){
-            return new Result(Code.GET_OK,recruitInfo,"获取职位信息成功");
+            return Result.ok(Code.GET_OK,recruitInfo,"获取职位信息成功");
         }else {
-            return new Result(Code.GET_FAIL, null,"获取职位信息失败");
+            return Result.fail(Code.GET_FAIL, null,"获取职位信息失败");
         }
     }
 
@@ -245,7 +244,7 @@ public class RecruitServiceImpl implements IRecruitService {
             /*存储到数据库中,有效五分钟*/
             stringRedisTemplate.opsForValue().set(key,jsonStr, Duration.ofMinutes(5L));
         }
-        PageInfo pageInfo = new PageInfo<>(likeInfo);
-        return new Result(Code.GET_OK,pageInfo,"获取数据成功");
+        PageInfo<Recruit> pageInfo = new PageInfo<>(likeInfo);
+        return Result.ok(Code.GET_OK,pageInfo,"获取数据成功");
     }
 }
