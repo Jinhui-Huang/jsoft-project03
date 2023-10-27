@@ -43,6 +43,7 @@ public class UserInfoController {
 
     @PostMapping
     public Result addUserInfo(@RequestBody UserInfo userInfo){
+        System.out.println(userInfo);
         return userInfoService.addUserInfo(userInfo);
     }
 
