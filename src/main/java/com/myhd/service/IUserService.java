@@ -40,4 +40,13 @@ public interface IUserService {
      * @return Boolean 修改密码是否成功
      */
     Result changePassword(User user);
+
+    /**
+     * @description: 根据用户编号获取user的信息
+     * @param userId 用户编号
+     * @return: com.myhd.util.Result
+     * @author CYQH
+     * @date: 2023/10/26 下午7:40
+     */
+    Result getUserById(Integer userId);
 }

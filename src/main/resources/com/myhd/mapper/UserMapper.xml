@@ -52,4 +52,21 @@
         </where>
     </update>
 
+    <update id="updateUser" parameterType="com.myhd.entity.User">
+        update tb_user
+        <set>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="email != null">
+                email = #{email}
+            </if>
+        </set>
+        where user_id = #{userId}
+    </update>
+
+    <select id="getUserById" resultType="com.myhd.entity.User">
+        select email, phone
+        from tb_user where user_id = #{userId}
+    </select>
 </mapper>
