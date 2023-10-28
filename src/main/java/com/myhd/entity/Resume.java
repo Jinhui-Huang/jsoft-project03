@@ -64,7 +64,7 @@ public class Resume implements Serializable {
     /**
      * 学历
      */
-    private Integer resumeDegree;
+    private String resumeDegree;
 
     /**
      * 所学专业

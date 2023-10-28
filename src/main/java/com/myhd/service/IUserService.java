@@ -40,4 +40,13 @@ public interface IUserService {
      * @return Boolean 修改密码是否成功
      */
     Result changePassword(User user);
+
+    /**
+     * @description 根据传入参数获取用户信息
+     * @author JoneElmo
+     * @date 2023-10-26 19:30
+     * @param
+     * @return
+     */
+    Result getUserInfo(FormDTO formDTO);
 }
