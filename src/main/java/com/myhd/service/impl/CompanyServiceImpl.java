@@ -52,7 +52,7 @@ public class CompanyServiceImpl implements ICompanyService {
             log.info("从数据库获取");
             if (companyInfo != null){
                 String jsonStr = JSONUtil.toJsonStr(companyInfo);
-                stringRedisTemplate.opsForValue().set(key,jsonStr,Duration.ofMinutes(30L));
+                stringRedisTemplate.opsForValue().set(key,jsonStr,Duration.ofMinutes(20L));
             }
         }
         if (companyInfo != null){
