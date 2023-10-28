@@ -88,4 +88,13 @@ public class UserServiceImpl implements IUserService {
         Integer i = userMapper.updateUserPassword(user);
         return i==1 ? new Result(Code.OK,true,"修改成功") : new Result(Code.FAIL,false,"修改失败");
     }
+
+    @Override
+    public Result getUserById(Integer userId) {
+        User userById = userMapper.getUserById(userId);
+        if (userById != null){
+            return Result.ok(Code.GET_OK,userById,"信息获取成功");
+        }
+        return Result.ok(Code.GET_FAIL, null,"信息获取失败");
+    }
 }

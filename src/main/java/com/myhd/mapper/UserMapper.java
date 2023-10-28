@@ -53,4 +53,22 @@ public interface UserMapper {
      */
     Integer updateUserPassword(User user);
 
+    /**
+     * @description: 在用户完善个人信息前,将新增的邮箱或电话更新到用户表中
+     * @param user
+     * @return: java.lang.Integer
+     * @author CYQH
+     * @date: 2023/10/26 下午4:15
+     */
+    Integer updateUser(User user);
+
+    /**
+     * @description: 用于进入个人信息页面时获取用户注册时的手机号或邮箱
+     * @param userId 用户编号
+     * @return: com.myhd.entity.User
+     * @author CYQH
+     * @date: 2023/10/26 下午7:36
+     */
+    User getUserById(Integer userId);
+
 }
