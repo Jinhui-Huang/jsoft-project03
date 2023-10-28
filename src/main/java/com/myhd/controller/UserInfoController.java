@@ -36,11 +36,25 @@ public class UserInfoController {
         return userService.getUserById(userId);
     }
 
+    /**
+     * @description: 获取用户个人信息用于数据显示
+     * @param userId 用户编号
+     * @return: com.myhd.util.Result
+     * @author CYQH
+     * @date: 2023/10/28 下午4:30
+     */
     @GetMapping("getUserInfo/{userId}")
     public Result getUserInfo(@PathVariable Integer userId){
         return userInfoService.getUserInfoById(userId);
     }
 
+    /**
+     * @description: 添加用户个人信息到个人用户信息表上
+     * @param userInfo 用户个人信息实体类
+     * @return: com.myhd.util.Result
+     * @author CYQH
+     * @date: 2023/10/28 下午4:31
+     */
     @PostMapping
     public Result addUserInfo(@RequestBody UserInfo userInfo){
         System.out.println(userInfo);
