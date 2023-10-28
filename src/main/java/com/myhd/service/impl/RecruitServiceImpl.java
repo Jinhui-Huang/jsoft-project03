@@ -197,21 +197,8 @@ public class RecruitServiceImpl implements IRecruitService {
      * @return
      */
     @Override
-    public Result acquireRecruitInfo(Integer companyId, Integer recruitId) {
-        String key = "job:" + companyId+":"+recruitId;
-        Recruit recruitInfo;
-        String s = stringRedisTemplate.opsForValue().get(key);
-        if (s != null){
-            recruitInfo = JSONUtil.toBean(s, Recruit.class);
-            log.info("从redis中获取");
-        }else {
-            recruitInfo = recruitMapper.getRecruitInfo(companyId,recruitId);
-            log.info("从数据库获取");
-            if (recruitMapper != null){
-                String jsonStr = JSONUtil.toJsonStr(recruitInfo);
-                stringRedisTemplate.opsForValue().set(key,jsonStr,Duration.ofMinutes(30L));
-            }
-        }
+    public Result acquireRecruitInfo(Integer companyId, Integer recruitId,Integer userId) {
+        Recruit recruitInfo = recruitMapper.getRecruitInfo(companyId,recruitId,userId);
         if(recruitInfo != null){
             return Result.ok(Code.GET_OK,recruitInfo,"获取职位信息成功");
         }else {
