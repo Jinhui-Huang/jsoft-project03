@@ -44,7 +44,7 @@ public interface RecruitMapper {
      * @param
      * @return
      */
-    Recruit getRecruitInfo(Integer companyId,Integer recruitId);
+    Recruit getRecruitInfo(Integer companyId,Integer recruitId,Integer userId);
 
     /**
      * @description 模糊查询

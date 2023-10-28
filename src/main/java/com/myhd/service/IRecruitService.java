@@ -70,7 +70,7 @@ public interface IRecruitService {
      * @param
      * @return
      */
-    Result acquireRecruitInfo(Integer companyId,Integer recruitId);
+    Result acquireRecruitInfo(Integer companyId,Integer recruitId,Integer userId);
 
     /**
      * @description 模糊查询

@@ -70,8 +70,9 @@ public class Recruit implements Serializable {
 
     /**
      * 招聘学历
+
      */
-    private Integer recruitDegree;
+    private String recruitDegree;
 
     /**
      * 招聘年龄
