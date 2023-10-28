@@ -1,12 +1,12 @@
 package com.myhd.controller;
 
-
 import com.myhd.entity.UserInfo;
 import com.myhd.service.impl.UserInfoServiceImpl;
-import com.myhd.service.impl.UserServiceImpl;
 import com.myhd.util.Result;
 import org.springframework.web.bind.annotation.*;
-
+import com.myhd.dto.FormDTO;
+import com.myhd.service.IUserService;
+import lombok.extern.slf4j.Slf4j;
 import javax.annotation.Resource;
 
 /**
@@ -19,11 +19,25 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/user-info")
+@Slf4j
 public class UserInfoController {
     @Resource
-    private UserServiceImpl userService;
+    private IUserService userService;
+
     @Resource
     private UserInfoServiceImpl userInfoService;
+    /**
+     * @description 获取用户信息
+     * @author JoneElmo
+     * @date 2023-10-26 19:18
+     * @param
+     * @return
+     */
+    @PostMapping("/getUserInfo")
+    public Result getUserInfo(@RequestBody FormDTO formDTO){
+        return userService.getUserInfo(formDTO);
+    }
+
     /**
      * @description: 初次进入个人信息页面时获取个人信息页面的手机号或密码使用
      * @param userId 用户编号

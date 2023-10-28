@@ -49,4 +49,13 @@ public interface IUserService {
      * @date: 2023/10/26 下午7:40
      */
     Result getUserById(Integer userId);
+
+    /**
+     * @description 根据传入参数获取用户信息
+     * @author JoneElmo
+     * @date 2023-10-26 19:30
+     * @param
+     * @return
+     */
+    Result getUserInfo(FormDTO formDTO);
 }

@@ -8,6 +8,7 @@ import com.myhd.util.Code;
 import com.myhd.util.Result;
 import lombok.val;
 import org.apache.ibatis.jdbc.SQL;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,8 +26,10 @@ import java.sql.SQLException;
 public class ResumeServiceImpl implements IResumeService {
 
     @Resource
-    ResumeMapper resumeMapper;
+    private ResumeMapper resumeMapper;
 
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
     /**
      * @description
      * @author JoneElmo
@@ -50,9 +53,13 @@ public class ResumeServiceImpl implements IResumeService {
     @Override
     public Result saveResumeInfo(Resume resume) {
         Integer i = null;
+        String key = "resume:cache:id";
         try {
+            val incrementId = stringRedisTemplate.opsForValue().increment(key, 1);
+            resume.setResumeId(incrementId.intValue());
             i = resumeMapper.insertResume(resume);
         } catch (Exception e) {
+            stringRedisTemplate.opsForValue().increment(key, -1);
             throw new BusinessException(Code.FAIL,"保存失败,简历已存在");
         }
         return i == 1 ? new Result(Code.OK, true,"添加成功"):new Result(Code.FAIL, false,"添加失败");

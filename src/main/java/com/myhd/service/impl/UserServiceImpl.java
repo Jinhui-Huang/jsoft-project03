@@ -8,8 +8,6 @@ import com.myhd.mapper.UserMapper;
 import com.myhd.service.IUserService;
 import com.myhd.util.Code;
 import com.myhd.util.Result;
-import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -41,10 +39,16 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public Result registerUser(User user) {
-        Integer i = null;
+        Integer i = 0;
+        String key = "user:cache:id";
+        String userNamePrefix = "user_";
         try {
+            Long incrementId = stringRedisTemplate.opsForValue().increment(key, 1);
+            user.setUserId(incrementId.intValue());
+            user.setUserName(userNamePrefix+incrementId);
             i = userMapper.saveUser(user);
         } catch (Exception e) {
+            stringRedisTemplate.opsForValue().increment(key, -1);
             throw new BusinessException(Code.FAIL,"注册失败，用户已存在");
         }
         return i==1 ? new Result(Code.OK,true,"注册成功") : new Result(Code.FAIL,false,"注册失败");
@@ -88,6 +92,23 @@ public class UserServiceImpl implements IUserService {
         Integer i = userMapper.updateUserPassword(user);
         return i==1 ? new Result(Code.OK,true,"修改成功") : new Result(Code.FAIL,false,"修改失败");
     }
+
+    /**
+     * @description 根据参数获取用户详细信息
+     * @author JoneElmo
+     * @date 2023-10-26 19:32
+     * @param formDTO
+     * @return Result
+     */
+    @Override
+    public Result getUserInfo(FormDTO formDTO) {
+        User user = userMapper.findByArgs(formDTO);
+        if (user!=null){
+            return new Result(Code.POST_OK, user, "用户信息获取成功");
+        }
+        return new Result(Code.POST_FAIL,null,"用户信息获取失败");
+    }
+
 
     @Override
     public Result getUserById(Integer userId) {
