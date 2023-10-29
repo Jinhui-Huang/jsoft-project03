@@ -67,7 +67,7 @@ public class ApplyServiceImpl implements IApplyService {
      */
     @Override
     public Result getAllUserApply(Integer userId, String like,Integer pageNum) {
-        PageHelper.startPage(pageNum,5);
+        PageHelper.startPage(pageNum,1);
         String key = userId+":"+like+":"+pageNum;
         List<Recruit> allUserApply;
         String s = stringRedisTemplate.opsForValue().get(key);
