@@ -79,8 +79,6 @@ public class RecruitController {
     @GetMapping("/queryRecruitList")
     public Result QueryRecruitList(@PathParam("word") String word, @PathParam("pageNum") Integer pageNum){
         val s = stringRedisTemplate.opsForValue().get("index:" + word + ":"+pageNum);
-        System.out.println(word);
-        System.out.println(pageNum);
         if (s==null){
             log.info("redis中不存在数据，正在从数据库查询...");
             val result = recruitService.searchRecruit(false, word, pageNum);
@@ -94,4 +92,13 @@ public class RecruitController {
             return new Result(Code.GET_OK,jsonObject,"获取职位列表成功");
         }
     }
+
+    @GetMapping("/quickQueryRecruitList")
+    public Result quickQueryRecruitList(@PathParam("jobFiled") Integer jobFiled,@PathParam("pageNum") Integer pageNum){
+        log.info("获取到的pageNum是"+pageNum);
+        val result = recruitService.searchRecruit(true, jobFiled,pageNum);
+        log.info("controller获取到的快捷查询数据:"+result);
+        return result;
+    }
+
 }
