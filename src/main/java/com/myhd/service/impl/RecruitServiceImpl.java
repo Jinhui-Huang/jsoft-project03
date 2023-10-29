@@ -101,29 +101,28 @@ public class RecruitServiceImpl implements IRecruitService {
      * @return List<Recruit>
      */
     @Override
-    public Result searchRecruit(Boolean useQuickSearch, Object args,Integer...pageNum) {
+    public Result searchRecruit(Boolean useQuickSearch, Object args,Integer pageNum) {
         List<Recruit> result;
         PageInfo recruitPageInfo;
         final Integer PAGE_SIZE = 10;
         if (useQuickSearch){
-            if (pageNum.length>0){
-                throw new BusinessException(Code.SYSTEM_ERR, "已启用快捷查询，不允许传入可变参数！");
-            }
-            result = recruitMapper.getInfoViaQuickMethod((Integer) args);
-            return new Result(Code.GET_OK, result, "查询成功");
-        }else {
-            if (pageNum.length>1){
-                throw new BusinessException(Code.SYSTEM_ERR, "可变参数至多为1个！");
-            }
+            PageHelper.startPage(pageNum,  PAGE_SIZE);
 
-            PageHelper.startPage(pageNum[0], PAGE_SIZE);
+            result = recruitMapper.getInfoViaQuickMethod((Integer) args);
+
+            recruitPageInfo = new PageInfo(result);
+
+            return new Result(Code.GET_OK, recruitPageInfo, "查询成功");
+
+        }else {
+            PageHelper.startPage(pageNum, PAGE_SIZE);
 
             /* 模糊查询 */
             result = recruitMapper.getLikeInfo((String) args);
 
             log.info("service层模糊查询结果"+result);
 
-            String key = "index:"+args+":"+pageNum[0];
+            String key = "index:"+args+":"+pageNum;
 
             recruitPageInfo = new PageInfo(result);
             recruitPageInfo.setPageSize(PAGE_SIZE);
