@@ -164,23 +164,13 @@ public class RecruitServiceImpl implements IRecruitService {
      * @return RECRUIT 招聘信息
      */
     @Override
-    public Result acquireRecruitByCompanyId(Integer companyId,Integer pageNum) {
-        PageHelper.startPage(pageNum,5);
-        String key = "company:"+companyId+":"+pageNum;
+    public Result acquireRecruitByCompanyId(Integer companyId,Integer userId) {
+//        PageHelper.startPage(pageNum,5);
 
-        List<Recruit> companyRecruit;
-        String s = stringRedisTemplate.opsForValue().get(key);
-        if (s != null){
-            companyRecruit = JSONUtil.toList(s,Recruit.class);
-            log.info("从redis中获取");
-        }else {
-            companyRecruit = recruitMapper.getRecruitByCompanyId(companyId);
-            log.info("从数据库获取");
-            String jsonStr = JSONUtil.toJsonStr(companyRecruit);
-            stringRedisTemplate.opsForValue().set(key,jsonStr,Duration.ofMinutes(10L));
-        }
+        List<Recruit> companyRecruit = recruitMapper.getRecruitByCompanyId(companyId,userId);
+        log.info("从数据库获取");
         PageInfo<Recruit> pageInfo = new PageInfo<>(companyRecruit);
-        return Result.ok(Code.GET_OK,pageInfo,"企业信息获取成功");
+        return Result.ok(Code.GET_OK,companyRecruit,"企业信息获取成功");
     }
 
     /**

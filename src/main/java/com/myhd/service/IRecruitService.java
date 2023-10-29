@@ -55,7 +55,7 @@ public interface IRecruitService {
      * @param companyId 企业编号
      * @return RECRUIT 招聘信息
      */
-    Result acquireRecruitByCompanyId(Integer companyId,Integer pageNum);
+    Result acquireRecruitByCompanyId(Integer companyId,Integer userId);
 
     /**
      * @description 职位信息页面 展示相关信息功能

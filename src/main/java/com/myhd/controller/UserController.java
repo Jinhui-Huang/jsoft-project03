@@ -156,7 +156,7 @@ public class UserController {
     private void setCookie(HttpServletResponse response, Cookie cookie1, int maxAge) {
         cookie1.setMaxAge(maxAge);
         cookie1.setPath("/");
-        cookie1.setHttpOnly(true);
+        cookie1.setHttpOnly(false);
         response.addCookie(cookie1);
     }
 }

@@ -23,7 +23,6 @@ import javax.annotation.Resource;
  */
 @Service
 public class UserServiceImpl implements IUserService {
-
     @Resource
     UserMapper userMapper;
 
@@ -31,7 +30,7 @@ public class UserServiceImpl implements IUserService {
     StringRedisTemplate stringRedisTemplate;
 
     /**
-     * @description
+     * @description 用户注册
      * @author JoneElmo
      * @date 2023-10-26 09:49
      * @param user
@@ -81,7 +80,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     /**
-     * @description
+     * @description 修改密码
      * @author JoneElmo
      * @date 2023-10-26 09:49
      * @param user
@@ -109,7 +108,13 @@ public class UserServiceImpl implements IUserService {
         return new Result(Code.POST_FAIL,null,"用户信息获取失败");
     }
 
-
+    /**
+     * @description: 用于进入个人信息页面时获取用户注册时的手机号或邮箱
+     * @param userId 用户编号
+     * @return: com.myhd.util.Result
+     * @author CYQH
+     * @date: 2023/10/28 下午9:44
+     */
     @Override
     public Result getUserById(Integer userId) {
         User userById = userMapper.getUserById(userId);

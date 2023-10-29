@@ -13,7 +13,7 @@
                job_field , a.user_id
         from tb_recruit r
         left join tb_apply a
-        using(recruit_id)
+        on a.recruit_id = r.recruit_id and a.company_id = r.company_id and user_id = #{userId}
         where r.company_id = #{companyId}
     </select>
 

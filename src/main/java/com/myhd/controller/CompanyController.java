@@ -2,6 +2,7 @@ package com.myhd.controller;
 
 
 import com.myhd.service.impl.CompanyServiceImpl;
+import com.myhd.service.impl.RecruitServiceImpl;
 import com.myhd.util.Result;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,9 @@ public class CompanyController {
     @Resource
     private CompanyServiceImpl companyService;
 
+    @Resource
+    private RecruitServiceImpl recruitService;
+
     /**
      * @description: 获取企业的详细信息
      * @param companyId 企业编号
@@ -33,7 +37,12 @@ public class CompanyController {
      * @date: 2023/10/28 下午4:30
      */
     @GetMapping("getCompanyInfo/{companyId}")
-    public Result getPhoneOrEmail(@PathVariable Integer companyId){
+    public Result getCompanyInfo(@PathVariable Integer companyId){
         return companyService.getCompanyInfo(companyId);
+    }
+
+    @GetMapping("getCompanyRecruit/{companyId}/{userId}")
+    public Result getCompanyRecruit(@PathVariable Integer companyId, @PathVariable Integer userId){
+        return recruitService.acquireRecruitByCompanyId(companyId,userId);
     }
 }

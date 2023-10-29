@@ -27,9 +27,10 @@ public interface RecruitMapper {
      * @author JoneElmo && CYQH
      * @date 2023-10-24 10:07
      * @param companyId 企业编号
+     * @param userId 用户编号
      * @return RECRUIT 招聘信息
      */
-    List<Recruit> getRecruitByCompanyId(Integer companyId);
+    List<Recruit> getRecruitByCompanyId(Integer companyId,Integer userId);
 
     /**
      * @description 职位信息页面 展示相关信息功能
