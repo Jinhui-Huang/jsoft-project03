@@ -35,11 +35,11 @@ public class ApplyServiceImpl implements IApplyService {
     private StringRedisTemplate stringRedisTemplate;
 
     /**
+     * @param apply 申请的数据对象
+     * @return Result
      * @description 点击立即申请按钮，发送信息
      * @author JoneElmo && CYQH
      * @date 2023-10-24 10:25
-     * @param apply 申请的数据对象
-     * @return Result
      */
     @Override
     public Result insertApplyInfo(Apply apply) {
@@ -47,41 +47,37 @@ public class ApplyServiceImpl implements IApplyService {
         try {
             integer = applyMapper.insertApplyInfo(apply);
         } catch (DuplicateKeyException e) {
-            return Result.fail(Code.POST_FAIL,false,"申请职位失败");
+            return Result.fail(Code.POST_FAIL, false, "申请职位失败");
         }
-        if (integer == 1){
-            return Result.ok(Code.POST_OK,true,"申请职位成功");
-        }else {
-            return Result.fail(Code.POST_FAIL,false,"申请职位失败");
+        if (integer == 1) {
+            return Result.ok(Code.POST_OK, true, "申请职位成功");
+        } else {
+            return Result.fail(Code.POST_FAIL, false, "申请职位失败");
         }
     }
 
     /**
-     * @description: 在我的职位页面显示所有已申请的职位,模糊查询和分页
-     * @param userId 用户编号
-     * @param like 模糊查询关键字
+     * @param userId  用户编号
+     * @param like    模糊查询关键字
      * @param pageNum 分页页码
+     * @description: 在我的职位页面显示所有已申请的职位, 模糊查询和分页
      * @return: com.myhd.util.Result
      * @author CYQH
      * @date: 2023/10/26 下午2:42
      */
     @Override
-    public Result getAllUserApply(Integer userId, String like,Integer pageNum) {
-        PageHelper.startPage(pageNum,1);
-        String key = userId+":"+like+":"+pageNum;
+    public Result getAllUserApply(Integer userId, String like, Integer pageNum) {
+        PageHelper.startPage(pageNum, 1);
+        String key = userId + ":" + like + ":" + pageNum;
         List<Recruit> allUserApply;
+        PageInfo<Recruit> pageInfo;
         String s = stringRedisTemplate.opsForValue().get(key);
-        if (s != null){
-            allUserApply = JSONUtil.toList(s,Recruit.class);
-            System.out.println("从redis中获取");
-        }else {
-            allUserApply = applyMapper.getAllUserApply(userId, like);
-            System.out.println("从数据库获取");
-            String jsonStr = JSONUtil.toJsonStr(allUserApply);
-            /*存储到数据库中,有效五分钟*/
-            stringRedisTemplate.opsForValue().set(key,jsonStr, Duration.ofMinutes(5L));
-        }
-        PageInfo<Recruit> pageInfo = new PageInfo<>(allUserApply);
-        return Result.ok(Code.GET_OK,pageInfo,"查询成功");
+        allUserApply = applyMapper.getAllUserApply(userId, like);
+        System.out.println("从数据库获取");
+        pageInfo = new PageInfo<>(allUserApply);
+        String jsonStr = JSONUtil.toJsonStr(pageInfo);
+        /*存储到数据库中,有效五分钟*/
+        stringRedisTemplate.opsForValue().set(key, jsonStr, Duration.ofMinutes(5L));
+        return Result.ok(Code.GET_OK, pageInfo, "查询成功");
     }
 }

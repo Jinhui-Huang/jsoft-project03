@@ -1,12 +1,20 @@
 package com.myhd.controller;
 
 
+import cn.hutool.json.JSONUtil;
+import com.github.pagehelper.PageInfo;
 import com.myhd.entity.Apply;
+import com.myhd.entity.Recruit;
 import com.myhd.service.impl.ApplyServiceImpl;
+import com.myhd.util.Code;
 import com.myhd.util.Result;
+import lombok.val;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.time.Duration;
+import java.util.List;
 
 /**
  * <p>
@@ -21,6 +29,9 @@ import javax.annotation.Resource;
 public class ApplyController {
     @Resource
     private ApplyServiceImpl applyService;
+
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
     /**
      * @description: 进行职位申请
      * @param apply 申请实体类
@@ -44,7 +55,16 @@ public class ApplyController {
      */
     @GetMapping("getAllUserApply/{like}/{pageNum}/{userId}")
     public Result getCompanyInfo(@PathVariable Integer userId, @PathVariable String like, @PathVariable Integer pageNum){
-        System.out.println(like == null);
-        return applyService.getAllUserApply(userId,like,pageNum);
+        String key = userId+":"+like+":"+pageNum;
+        List<Recruit> allUserApply;
+        PageInfo<Recruit> pageInfo;
+        String s = stringRedisTemplate.opsForValue().get(key);
+        if (s == null){
+            return applyService.getAllUserApply(userId, like, pageNum);
+        }else {
+            System.out.println("从redis获取");
+            val jsonObject = JSONUtil.parseObj(s);
+            return Result.ok(Code.GET_OK,jsonObject,"查询成功");
+        }
     }
 }
