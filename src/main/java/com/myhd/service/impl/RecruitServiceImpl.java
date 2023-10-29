@@ -149,7 +149,7 @@ public class RecruitServiceImpl implements IRecruitService {
             stringRedisTemplate.opsForValue().set(key,jsonStr,Duration.ofMinutes(10L));
         }
         PageInfo<Recruit> pageInfo = new PageInfo<>(highSalary);
-        return Result.ok(Code.OK,pageInfo,"高薪职位查询成功");
+        return Result.ok(Code.GET_OK,pageInfo,"高薪职位查询成功");
     }
 
     /**

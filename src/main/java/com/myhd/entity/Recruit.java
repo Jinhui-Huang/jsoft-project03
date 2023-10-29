@@ -122,4 +122,6 @@ public class Recruit implements Serializable {
      * 如果userid字段为null,说明未被申请
      */
     private Integer userId;
+    /*用于判断是否关注*/
+    private Integer followStatus;
 }

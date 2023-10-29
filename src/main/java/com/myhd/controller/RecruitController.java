@@ -51,4 +51,16 @@ public class RecruitController {
         return recruitService.acquireRecruitInfo(companyId,recruitId,userId);
     }
 
+    /**
+     * @description: 获取高薪职位列表
+     * @return: com.myhd.util.Result
+     * @author CYQH
+     * @date: 2023/10/29 下午2:05
+     */
+    @GetMapping("getHighSalaryRecruit")
+    public Result getHighSalaryRecruit(){
+        return recruitService.acquireHighSalaryList();
+    }
+
+
 }
