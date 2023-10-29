@@ -24,7 +24,7 @@ public interface IRecruitService {
      * @param args 查询的参数
      * @return
      */
-    Result searchRecruit(Boolean useQuickSearch,Object args,Integer...pageNum);
+    Result searchRecruit(Boolean useQuickSearch,Object args,Integer pageNum);
 
     /**
      * Description: getFields 服务层中获取redis中存放的相关领域
