@@ -41,6 +41,14 @@ public class CompanyController {
         return companyService.getCompanyInfo(companyId);
     }
 
+    /**
+     * @description: 获取该企业下的所有企业信息
+     * @param companyId
+     * @param userId
+     * @return: com.myhd.util.Result
+     * @author CYQH
+     * @date: 2023/10/29 下午2:01
+     */
     @GetMapping("getCompanyRecruit/{companyId}/{userId}")
     public Result getCompanyRecruit(@PathVariable Integer companyId, @PathVariable Integer userId){
         return recruitService.acquireRecruitByCompanyId(companyId,userId);
