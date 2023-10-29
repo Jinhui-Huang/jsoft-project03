@@ -11,6 +11,7 @@ import com.myhd.service.IRecruitService;
 import lombok.extern.slf4j.Slf4j;
 import com.myhd.util.Code;
 import com.myhd.util.Result;
+import lombok.val;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -96,12 +97,14 @@ public class RecruitServiceImpl implements IRecruitService {
      * @date 2023-10-26 09:38
      * @param useQuickSearch true:启用快捷查询
     args
+    pageNum 当前展示的页码
      * @return List<Recruit>
      */
     @Override
     public Result searchRecruit(Boolean useQuickSearch, Object args,Integer...pageNum) {
         List<Recruit> result;
         PageInfo recruitPageInfo;
+        final Integer PAGE_SIZE = 10;
         if (useQuickSearch){
             if (pageNum.length>0){
                 throw new BusinessException(Code.SYSTEM_ERR, "已启用快捷查询，不允许传入可变参数！");
@@ -112,14 +115,24 @@ public class RecruitServiceImpl implements IRecruitService {
             if (pageNum.length>1){
                 throw new BusinessException(Code.SYSTEM_ERR, "可变参数至多为1个！");
             }
+
+            PageHelper.startPage(pageNum[0], PAGE_SIZE);
+
             /* 模糊查询 */
             result = recruitMapper.getLikeInfo((String) args);
-            Integer pageSize = 10;
+
+            log.info("service层模糊查询结果"+result);
+
             String key = "index:"+args+":"+pageNum[0];
-            String jsonStr = JSONUtil.toJsonStr(result);
-            stringRedisTemplate.opsForValue().set(key, jsonStr, Duration.ofMinutes(10));
-            PageHelper.startPage(pageNum[0], pageSize);
+
             recruitPageInfo = new PageInfo(result);
+            recruitPageInfo.setPageSize(PAGE_SIZE);
+
+            val jsonStr = JSONUtil.toJsonStr(recruitPageInfo);
+            log.info("service层准备放入redis的数据"+jsonStr);
+
+            stringRedisTemplate.opsForValue().set(key, jsonStr, Duration.ofMinutes(3));  //设置过期时间为3分钟
+
             return Result.ok(Code.OK, recruitPageInfo, "查询成功");
         }
     }
@@ -129,7 +142,7 @@ public class RecruitServiceImpl implements IRecruitService {
      * 需要同企业表连接，获取公司logo
      * 根据薪资max值降序排列
      * 使用mybatis resultmap来映射这个图标字段
-     * @author JoneElmo && CYQH
+     * @author JoneElmo
      * @date 2023-10-24 10:53
      * @return Recruit
      */
@@ -158,7 +171,7 @@ public class RecruitServiceImpl implements IRecruitService {
      * 需要分页
      * 根据企业ID查询招聘信息
      * 通过和申请表外连接来查询 判断是否被申请 （通过user_id来判断）
-     * @author JoneElmo && CYQH
+     * @author JoneElmo
      * @date 2023-10-24 10:07
      * @param companyId 企业编号
      * @return RECRUIT 招聘信息
@@ -191,7 +204,7 @@ public class RecruitServiceImpl implements IRecruitService {
      * select r.*,a.* from tb_recruit r
      * left join tb_apply a
      * on r.id = a.recruit_id
-     * @author JoneElmo && CYQH
+     * @author JoneElmo
      * @date 2023-10-24 10:27
      * @param
      * @return
@@ -210,14 +223,14 @@ public class RecruitServiceImpl implements IRecruitService {
      * @description 模糊查询
      * 查询所有岗位信息  需要分页 pageInfo
      * 和申请表外连接 判断是否被申请
-     * @author JoneElmo && CYQH
+     * @author JoneElmo
      * @date 2023-10-24 10:39
      * @param like 模糊查询的参数  招聘的职位关键字(recruit_name)
      * @return
      */
     @Override
     public Result getLikeInfo(String like,Integer pageNum) {
-        PageHelper.startPage(pageNum,5);
+        PageHelper.startPage(pageNum,1);
         String key = "index:"+like+":"+pageNum;
         List<Recruit> likeInfo;
         String s = stringRedisTemplate.opsForValue().get(key);
