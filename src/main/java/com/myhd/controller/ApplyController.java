@@ -13,6 +13,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.websocket.server.PathParam;
 import java.time.Duration;
 import java.util.List;
 
@@ -53,8 +54,9 @@ public class ApplyController {
      * @author CYQH
      * @date: 2023/10/29 下午3:30
      */
-    @GetMapping("getAllUserApply/{like}/{pageNum}/{userId}")
-    public Result getCompanyInfo(@PathVariable Integer userId, @PathVariable String like, @PathVariable Integer pageNum){
+    @GetMapping("getAllUserApply/{pageNum}/{userId}")
+    public Result getCompanyInfo(@PathVariable Integer userId, @PathParam("like") String like, @PathVariable Integer pageNum){
+        System.out.println(like);
         String key = userId+":"+like+":"+pageNum;
         List<Recruit> allUserApply;
         PageInfo<Recruit> pageInfo;
