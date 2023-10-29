@@ -124,4 +124,8 @@ public class Recruit implements Serializable {
     private Integer userId;
     /*用于判断是否关注*/
     private Integer followStatus;
+    /**
+     * 用于模糊查询展示列表页面显示企业规模信息
+     */
+    private String companyScale;
 }
