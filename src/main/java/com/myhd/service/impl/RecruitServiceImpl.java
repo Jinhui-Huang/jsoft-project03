@@ -159,7 +159,7 @@ public class RecruitServiceImpl implements IRecruitService {
             highSalary = recruitMapper.getHighSalary();
             log.info("从数据库获取");
             String jsonStr = JSONUtil.toJsonStr(highSalary);
-            stringRedisTemplate.opsForValue().set(key,jsonStr,Duration.ofMinutes(10L));
+            stringRedisTemplate.opsForValue().set(key,jsonStr,Duration.ofMinutes(5L));
         }
         PageInfo<Recruit> pageInfo = new PageInfo<>(highSalary);
         return Result.ok(Code.GET_OK,pageInfo,"高薪职位查询成功");
