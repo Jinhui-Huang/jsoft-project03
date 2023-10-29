@@ -33,10 +33,10 @@
         select r.company_id, r.recruit_id, r.company_name, recruit_name, recruit_tag,
         r.recruit_address, recruit_salary_max, recruit_salary_min, recruit_number,
         recruit_degree, recruit_age, recruit_exp, recruit_type, recruit_time,
-        recruit_text_duty, recruit_text_need, job_field, a.user_id
+        recruit_text_duty, recruit_text_need, job_field, c.company_scale ,a.user_id
         from tb_recruit r
-        left join tb_apply a
-        using(recruit_id)
+        left join tb_apply a using (company_id,recruit_id)
+        join tb_company c using (company_id)
     </sql>
 
     <select id="getLikeInfo" resultType="com.myhd.entity.Recruit" parameterType="java.lang.String">
