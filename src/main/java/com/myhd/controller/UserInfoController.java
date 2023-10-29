@@ -3,11 +3,14 @@ package com.myhd.controller;
 import com.myhd.entity.UserInfo;
 import com.myhd.service.impl.UserInfoServiceImpl;
 import com.myhd.util.Result;
+import lombok.val;
 import org.springframework.web.bind.annotation.*;
 import com.myhd.dto.FormDTO;
 import com.myhd.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * <p>
@@ -70,9 +73,42 @@ public class UserInfoController {
      * @date: 2023/10/28 下午4:31
      */
     @PostMapping
-    public Result addUserInfo(@RequestBody UserInfo userInfo){
-        System.out.println(userInfo);
-        return userInfoService.addUserInfo(userInfo);
+    public Result addUserInfo(@RequestBody UserInfo userInfo, HttpServletResponse response){
+        Result result = userInfoService.addUserInfo(userInfo);
+        /*手机号脱敏处理*/
+        String phone = null;
+        if (userInfo.getPhone()!=null){
+            phone = userInfo.getPhone().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+        }
+        val realEmail = userInfo.getEmail();
+        /*邮箱脱敏处理*/
+        String maskedEmail = null;
+        if (realEmail != null){
+            val split = realEmail.split("@");
+            maskedEmail = maskEmail(split[0]) + "@" + split[1];
+        }
+        val cookiePhone = new Cookie("cookiePhone",phone);
+        val cookieUserEmail = new Cookie("cookieUserEmail", maskedEmail);
+        int maxAge = 2 * 24 * 60 * 60; // 2天 = 2 * 24小时 * 60分钟 * 60秒
+        setCookie(response, cookiePhone, maxAge);
+        setCookie(response, cookieUserEmail, maxAge);
+        return result;
+    }
+
+    private void setCookie(HttpServletResponse response, Cookie cookie1, int maxAge) {
+        cookie1.setMaxAge(maxAge);
+        cookie1.setPath("/");
+        cookie1.setHttpOnly(false);
+        response.addCookie(cookie1);
+    }
+
+    private String maskEmail(String emailPart) {
+        int length = emailPart.length();
+        if (length <= 2) {
+            return emailPart.charAt(0) + "**";
+        } else {
+            return emailPart.charAt(0) + "*".repeat(length - 2) + emailPart.charAt(length - 1);
+        }
     }
 
 }
