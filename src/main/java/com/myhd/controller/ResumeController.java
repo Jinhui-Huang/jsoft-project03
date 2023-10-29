@@ -11,6 +11,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.websocket.server.PathParam;
 
 /**
  * <p>
@@ -36,7 +37,7 @@ public class ResumeController {
     }
 
     @GetMapping("/acquireResume")
-    public Result acquireResume(Integer userId){
+    public Result acquireResume(@PathParam("userId") Integer userId){
         log.info("获取到的用户id是"+userId);
         val result = resumeService.acquireResumeInfo(userId);
         return result;
