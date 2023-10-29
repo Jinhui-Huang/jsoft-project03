@@ -48,7 +48,7 @@
         </where>
     </select>
 
-    <select id="getInfoViaQuickMethod" resultType="com.myhd.entity.Recruit" parameterType="java.lang.String">
+    <select id="getInfoViaQuickMethod" resultType="com.myhd.entity.Recruit" parameterType="int">
         <include refid="likeSelect"></include>
         <where>
             <if test="like != null">
