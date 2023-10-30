@@ -68,16 +68,11 @@ public class ApplyServiceImpl implements IApplyService {
     @Override
     public Result getAllUserApply(Integer userId, String like, Integer pageNum) {
         PageHelper.startPage(pageNum, 5);
-        String key = userId + ":" + like + ":" + pageNum;
         List<Recruit> allUserApply;
         PageInfo<Recruit> pageInfo;
-        String s = stringRedisTemplate.opsForValue().get(key);
         allUserApply = applyMapper.getAllUserApply(userId, like);
         System.out.println("从数据库获取");
         pageInfo = new PageInfo<>(allUserApply);
-        String jsonStr = JSONUtil.toJsonStr(pageInfo);
-        /*存储到数据库中,有效五分钟*/
-        stringRedisTemplate.opsForValue().set(key, jsonStr, Duration.ofMinutes(5L));
         return Result.ok(Code.GET_OK, pageInfo, "查询成功");
     }
 }

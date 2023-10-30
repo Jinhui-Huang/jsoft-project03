@@ -56,17 +56,6 @@ public class ApplyController {
      */
     @GetMapping("getAllUserApply/{pageNum}/{userId}")
     public Result getCompanyInfo(@PathVariable Integer userId, @PathParam("like") String like, @PathVariable Integer pageNum){
-        System.out.println(like);
-        String key = userId+":"+like+":"+pageNum;
-        List<Recruit> allUserApply;
-        PageInfo<Recruit> pageInfo;
-        String s = stringRedisTemplate.opsForValue().get(key);
-        if (s == null){
             return applyService.getAllUserApply(userId, like, pageNum);
-        }else {
-            System.out.println("从redis获取");
-            val jsonObject = JSONUtil.parseObj(s);
-            return Result.ok(Code.GET_OK,jsonObject,"查询成功");
-        }
     }
 }
