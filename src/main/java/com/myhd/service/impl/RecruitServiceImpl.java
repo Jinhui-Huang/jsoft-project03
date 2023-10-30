@@ -120,7 +120,7 @@ public class RecruitServiceImpl implements IRecruitService {
             /* 模糊查询 */
             result = recruitMapper.getLikeInfo((String) args);
 
-            log.info("service层模糊查询结果"+result);
+//            log.info("service层模糊查询结果"+result);
 
             String key = "index:"+args+":"+pageNum;
 
@@ -128,7 +128,7 @@ public class RecruitServiceImpl implements IRecruitService {
             recruitPageInfo.setPageSize(PAGE_SIZE);
 
             val jsonStr = JSONUtil.toJsonStr(recruitPageInfo);
-            log.info("service层准备放入redis的数据"+jsonStr);
+//            log.info("service层准备放入redis的数据"+jsonStr);
 
             stringRedisTemplate.opsForValue().set(key, jsonStr, Duration.ofMinutes(3));  //设置过期时间为3分钟
 

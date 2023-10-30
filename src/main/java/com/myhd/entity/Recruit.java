@@ -62,6 +62,10 @@ public class Recruit implements Serializable {
      * 最低薪
      */
     private Double recruitSalaryMin;
+    /**
+     * 文字性薪资描述
+     * */
+    private String recruitSalary;
 
     /**
      * 招聘人数
