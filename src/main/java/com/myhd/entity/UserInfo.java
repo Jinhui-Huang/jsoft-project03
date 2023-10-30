@@ -3,9 +3,11 @@ package com.myhd.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>
@@ -58,6 +60,7 @@ public class UserInfo implements Serializable {
     /**
      * 用户生日
      */
+//    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     private Date birthday;
 
     /**
@@ -123,6 +126,7 @@ public class UserInfo implements Serializable {
     /**
      * 毕业时间
      */
+//    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     private Date graduationTime;
 
     /**

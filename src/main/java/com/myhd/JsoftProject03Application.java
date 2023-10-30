@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @MapperScan("com.myhd.mapper")
 public class JsoftProject03Application {
-
+    /*测试*/
     public static void main(String[] args) {
         SpringApplication.run(JsoftProject03Application.class, args);
     }

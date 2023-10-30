@@ -1,9 +1,12 @@
 package com.myhd.entity;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>
@@ -34,26 +37,6 @@ public class Apply implements Serializable {
      * 企业编号
      */
     private Integer companyId;
-
-    /**
-     * 企业名称
-     */
-    private String companyName;
-
-    /**
-     * 工作地址
-     */
-    private String recruitAddress;
-
-    /**
-     * 刷新时间
-     */
-    private String updateTime;
-
-    /**
-     * 薪水
-     */
-    private Double salary;
 
 
 }

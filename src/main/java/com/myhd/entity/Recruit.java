@@ -6,6 +6,7 @@ import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>
@@ -33,6 +34,11 @@ public class Recruit implements Serializable {
     private Integer recruitId;
 
     /**
+     公司名称
+    * */
+    private String companyName;
+
+    /**
      * 招聘的职位名称
      */
     private String recruitName;
@@ -56,6 +62,10 @@ public class Recruit implements Serializable {
      * 最低薪
      */
     private Double recruitSalaryMin;
+    /**
+     * 文字性薪资描述
+     * */
+    private String recruitSalary;
 
     /**
      * 招聘人数
@@ -64,8 +74,9 @@ public class Recruit implements Serializable {
 
     /**
      * 招聘学历
+
      */
-    private Integer recruitDegree;
+    private String recruitDegree;
 
     /**
      * 招聘年龄
@@ -102,5 +113,23 @@ public class Recruit implements Serializable {
      */
     private Integer jobField;
 
+    /**
+     * compnay字段
+     * 用于在首页高薪职位列表中显示公司logo
+     */
+    private Company company;
 
+    /**
+     * 用于判断记录是否被申请
+     * 通过外连接查询出来的结果
+     * 如果包含userid字段，说明被申请
+     * 如果userid字段为null,说明未被申请
+     */
+    private Integer userId;
+    /*用于判断是否关注*/
+    private Integer followStatus;
+    /**
+     * 用于模糊查询展示列表页面显示企业规模信息
+     */
+    private String companyScale;
 }

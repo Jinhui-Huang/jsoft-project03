@@ -4,6 +4,7 @@ import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>
@@ -63,7 +64,7 @@ public class Resume implements Serializable {
     /**
      * 学历
      */
-    private Integer resumeDegree;
+    private String resumeDegree;
 
     /**
      * 所学专业

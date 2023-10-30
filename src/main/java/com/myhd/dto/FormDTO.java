@@ -2,10 +2,8 @@ package com.myhd.dto;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 /**
- * Description: LoginFormDto
+ * Description: LoginFormDto 用于登录时的表单数据
  * <br></br>
  * className: LoginFormDto
  * <br></br>
@@ -17,7 +15,8 @@ import java.time.LocalDateTime;
  * @Date: 2023/10/22 17:00
  */
 @Data
-public class LoginFormDTO{
+public class FormDTO {
+    private Integer userId;
     private String phone;
     private String userEmail;
     private String userName;
