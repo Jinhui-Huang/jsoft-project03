@@ -50,7 +50,7 @@ public class EmailServe {
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(javaMailSender.createMimeMessage());
             /*发件人*/
-            mimeMessageHelper.setFrom(sendEmail, "蝶飞人才招聘平台");
+            mimeMessageHelper.setFrom(sendEmail, "MYHD人才招聘平台");
             /*收件人*/
             mimeMessageHelper.setTo(toEmail.getToUser());
             /*设置邮箱验证码*/

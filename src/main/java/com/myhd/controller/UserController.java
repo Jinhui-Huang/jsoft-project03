@@ -3,12 +3,10 @@ package com.myhd.controller;
 
 import cn.hutool.core.util.RandomUtil;
 import com.myhd.dto.FormDTO;
+import com.myhd.dto.ToEmail;
 import com.myhd.entity.User;
 import com.myhd.service.IUserService;
-import com.myhd.util.AliSms;
-import com.myhd.util.Code;
-import com.myhd.util.Result;
-import com.myhd.util.UserHolder;
+import com.myhd.util.*;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -21,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.time.Duration;
 
 /**
  * <p>
@@ -38,6 +37,8 @@ public class UserController {
     @Resource
     private IUserService userService;
 
+    @Resource
+    private EmailServe emailServe;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
     @PostMapping("/login")
@@ -101,23 +102,34 @@ public class UserController {
     }
     @PostMapping("/sendVerifyCode")
     public Result sendVerifyCode(@RequestBody FormDTO formDTO){
-        String verifyCode = RandomUtil.randomNumbers(6);
         String key = null;
         if (formDTO.getPhone()!=null){  //发短信验证码
+            String verifyCode = RandomUtil.randomNumbers(6);
             key = "reset:code:"+ formDTO.getPhone();
-            stringRedisTemplate.opsForValue().set(key,verifyCode); //5分钟过期 todo
+            stringRedisTemplate.opsForValue().set(key,verifyCode, Duration.ofMinutes(5)); //5分钟过期
             try {
                 AliSms.sendPhoneCode(formDTO.getPhone(), verifyCode, true);
+                return new Result(Code.OK, verifyCode, "发送验证码");
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }else if (formDTO.getUserEmail()!=null){  //发邮箱验证码
+            String verifyCode = RandomUtil.randomNumbers(6);
             key = "reset:code:"+ formDTO.getUserEmail();
-            stringRedisTemplate.opsForValue().set(key,verifyCode); //5分钟过期 todo
-
+            stringRedisTemplate.opsForValue().set(key,verifyCode,Duration.ofMinutes(5)); //5分钟过期
+            val toEmail = new ToEmail();
+            toEmail.setToUser(formDTO.getUserEmail());
+            toEmail.setContent(verifyCode);
+            val b = emailServe.sendEmail(toEmail);
+            if (b){
+                log.info("发送邮箱验证码成功");
+                return new Result(Code.OK, verifyCode, "发送验证码");
+            }else {
+                log.info("发送邮箱验证码失败");
+            }
         }
         //发送验证码
-        return new Result(Code.OK, verifyCode, "发送验证码");
+        return new Result(Code.FAIL, null, "发送验证码失败");
     }
 
     @PostMapping("/validateCode")
